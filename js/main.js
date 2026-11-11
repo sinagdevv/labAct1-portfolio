@@ -131,6 +131,12 @@
   const odoSec = $('.odometer__sec');
   const odoMph = $('.odometer__mph b');
   const toast = $('.toast');
+
+  // The odometer steps aside while the footer is on screen so it never covers footer links.
+  let footerInView = false;
+  const showOdometer = () => odometer.classList.toggle('is-visible', scrollY > innerHeight * 0.6 && !footerInView);
+  new IntersectionObserver(([entry]) => { footerInView = entry.isIntersecting; showOdometer(); })
+    .observe($('.footer'));
   const streak = $('.streak');
   const total = String(sections.length).padStart(2, '0');
 
@@ -167,7 +173,7 @@
 
     let current = -1;
     sections.forEach((s, i) => { if (s.getBoundingClientRect().top <= innerHeight * 0.4) current = i; });
-    odometer.classList.toggle('is-visible', y > innerHeight * 0.6);
+    showOdometer();
     if (current >= 0) {
       odoEra.textContent = sections[current].dataset.era;
       odoSec.textContent = `${String(current + 1).padStart(2, '0')}/${total}`;
