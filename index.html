@@ -13,22 +13,124 @@
   <link rel="stylesheet" href="css/styles.css">
   <!-- Reveal styles only apply once JS confirms it is running; otherwise all content stays visible. -->
   <script>
-    document.documentElement.classList.add('js');
-    setTimeout(function () { if (!window.__motionReady) document.documentElement.classList.remove('js'); }, 2500);
+    (function (d) {
+      d.classList.add('js');
+      // The DeLorean intro plays once per session, never for reduced-motion visitors.
+      try {
+        if (!sessionStorage.getItem('sinag-intro') && !matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('intro-on');
+      } catch (e) {}
+      setTimeout(function () { if (!window.__motionReady) d.classList.remove('js'); }, 2500);
+      setTimeout(function () { d.classList.remove('intro-on', 'intro-playing'); }, 9000); // failsafe: never leave the overlay up
+    })(document.documentElement);
   </script>
   <!-- GSAP drives only scroll-scrubbed effects; the site works fully if the CDN is unreachable. -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="js/intro.js" defer></script>
   <script src="js/main.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
+  <!-- SINAG brand sprite: monogram + wordmark, reused by the nav and footer. -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="sinag-mark" viewBox="0 0 64 64">
+      <path d="M8 32h48" stroke="var(--brand-axis, #4fe3ff)" stroke-width="2.5"/>
+      <path d="M39.39 14A12 12 0 1 0 29 32M35 32A12 12 0 1 1 24.61 50" fill="none" stroke="currentColor" stroke-width="6"/>
+      <circle cx="47" cy="11" r="4" fill="var(--brand-dot, #ffb23f)"/>
+    </symbol>
+    <symbol id="sinag-word" viewBox="0 0 100 24">
+      <path fill="none" stroke="currentColor" stroke-width="3" stroke-miterlimit="1.5" d="M11.33 4.5A5 5 0 1 0 7 12M7 12A5 5 0 1 1 2.67 19.5M22 2v20M31 22V2l14 20V2M53 22l8-20 8 20M56.2 15h9.6M94.66 5.57A10 10 0 1 0 97 12h-8"/>
+    </symbol>
+  </svg>
+
+  <!-- ============ INTRO: THE DELOREAN ARRIVAL (decorative, skippable, once per session) ============ -->
+  <div class="intro" id="intro">
+    <div class="intro__stage" aria-hidden="true">
+      <div class="intro__glow"></div>
+      <div class="intro__hud mono">
+        <span class="intro__leds"><i></i><i></i><i></i></span>
+        <span class="intro__status">Temporal system // online</span>
+      </div>
+
+      <div class="intro__scene">
+        <div class="intro__floor"><div class="intro__lanes"></div><span class="intro__fire intro__fire--a"></span><span class="intro__fire intro__fire--b"></span></div>
+        <div class="intro__portal"></div>
+        <div class="intro__car">
+          <span class="intro__trail intro__trail--a"></span>
+          <span class="intro__trail intro__trail--b"></span>
+          <!-- Original illustration inspired by the DMC-12 profile: wedge nose, gull-wing seam, louvered fastback, turbine-style wheels. -->
+          <svg class="dmc" viewBox="0 0 840 250" overflow="visible">
+            <defs>
+              <linearGradient id="dmc-steel" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#f1f2f3"/><stop offset=".32" stop-color="#c3c8cd"/>
+                <stop offset=".58" stop-color="#8a9097"/><stop offset=".82" stop-color="#5a6066"/><stop offset="1" stop-color="#383c41"/>
+              </linearGradient>
+              <pattern id="dmc-brush" width="6" height="3" patternUnits="userSpaceOnUse"><path d="M0 1.5h6" stroke="#fff" stroke-opacity=".07"/></pattern>
+              <linearGradient id="dmc-glass" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#2a323b"/><stop offset=".45" stop-color="#11161c"/><stop offset="1" stop-color="#07090b"/>
+              </linearGradient>
+              <radialGradient id="dmc-rim" cx=".4" cy=".35" r=".75">
+                <stop offset="0" stop-color="#e9ebed"/><stop offset=".6" stop-color="#9aa0a6"/><stop offset="1" stop-color="#4a4f55"/>
+              </radialGradient>
+              <linearGradient id="dmc-beam" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#fff6dc" stop-opacity=".7"/><stop offset="1" stop-color="#fff6dc" stop-opacity="0"/>
+              </linearGradient>
+              <linearGradient id="dmc-sheen" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+              </linearGradient>
+              <clipPath id="dmc-body-clip"><path d="M26 192 24 130 28 80 40 74 110 72 345 27 455 27 560 78 815 122 830 128 832 166 824 196 728 198A66 66 0 0 0 594 198H272A66 66 0 0 0 138 198H60Z"/></clipPath>
+            </defs>
+            <polygon class="dmc-beam" points="830,128 1260,96 1260,222 830,150" fill="url(#dmc-beam)"/>
+            <circle cx="205" cy="184" r="64" fill="#050506"/><circle cx="660" cy="184" r="64" fill="#050506"/>
+            <g clip-path="url(#dmc-body-clip)">
+              <rect width="840" height="250" fill="url(#dmc-steel)"/>
+              <rect width="840" height="250" fill="url(#dmc-brush)"/>
+              <path d="M40 120 816 138" stroke="#fff" stroke-opacity=".55" stroke-width="1.5"/>
+              <path d="M40 123 816 141" stroke="#000" stroke-opacity=".25" stroke-width="1.5"/>
+              <path d="M20 168H840V200H20Z" fill="#141518"/>
+              <path d="M20 128h48v72H20ZM784 150h56v50h-56Z" fill="#0f1012"/>
+              <rect class="dmc-sheen" x="-320" y="0" width="260" height="250" fill="url(#dmc-sheen)" transform="skewX(-18)"/>
+            </g>
+            <path d="M548 82 456 34H382V84Z" fill="url(#dmc-glass)"/>
+            <path d="M548 82 456 34" stroke="#fff" stroke-opacity=".35"/>
+            <path d="M380 27V170H556L586 96" fill="none" stroke="#202327" stroke-width="1.6"/>
+            <path d="M345 27 110 72" stroke="#0b0c0e" stroke-width="3"/>
+            <path stroke="#0b0c0e" stroke-width="2" d="M320 32v8M296 37v8M272 41v8M248 46v8M224 50v8M200 55v8M176 59v8M152 64v8"/>
+            <rect x="24" y="84" width="10" height="22" rx="2" fill="#c8261b"/>
+            <rect x="798" y="138" width="16" height="7" rx="2" fill="#e8a032"/>
+            <rect class="dmc-head" x="826" y="130" width="6" height="14" rx="1.5" fill="#fff6dc"/>
+            <g class="dmc-wheel"><circle cx="205" cy="184" r="56" fill="#0d0d0f"/><circle cx="205" cy="184" r="52" fill="none" stroke="#25272b" stroke-width="2"/><circle cx="205" cy="184" r="38" fill="url(#dmc-rim)"/><g class="dmc-spin" style="transform-origin:205px 184px"><g fill="#2c3035"><rect x="203" y="149" width="4" height="20" rx="2" transform="rotate(0 205 184)"/><rect x="203" y="149" width="4" height="20" rx="2" transform="rotate(24 205 184)"/><rect x="203" y="149" width="4" height="20" rx="2" transform="rotate(48 205 184)"/><rect x="203" y="149" width="4" height="20" rx="2" transform="rotate(72 205 184)"/><rect x="203" y="149" width="4" height="20" rx="2" transform="rotate(96 205 184)"/><rect x="203" y="149" width="4" height="20" rx="2" transform="rotate(120 205 184)"/><rect x="203" y="149" width="4" height="20" rx="2" transform="rotate(144 205 184)"/><rect x="203" y="149" width="4" height="20" rx="2" transform="rotate(168 205 184)"/><rect x="203" y="149" width="4" height="20" rx="2" transform="rotate(192 205 184)"/><rect x="203" y="149" width="4" height="20" rx="2" transform="rotate(216 205 184)"/><rect x="203" y="149" width="4" height="20" rx="2" transform="rotate(240 205 184)"/><rect x="203" y="149" width="4" height="20" rx="2" transform="rotate(264 205 184)"/><rect x="203" y="149" width="4" height="20" rx="2" transform="rotate(288 205 184)"/><rect x="203" y="149" width="4" height="20" rx="2" transform="rotate(312 205 184)"/><rect x="203" y="149" width="4" height="20" rx="2" transform="rotate(336 205 184)"/></g><path d="M205 150v-4" stroke="#fff" stroke-opacity=".6" stroke-width="3"/></g><circle cx="205" cy="184" r="10" fill="#1d2024" stroke="#6b7077" stroke-width="2"/></g>
+            <g class="dmc-wheel"><circle cx="660" cy="184" r="56" fill="#0d0d0f"/><circle cx="660" cy="184" r="52" fill="none" stroke="#25272b" stroke-width="2"/><circle cx="660" cy="184" r="38" fill="url(#dmc-rim)"/><g class="dmc-spin" style="transform-origin:660px 184px"><g fill="#2c3035"><rect x="658" y="149" width="4" height="20" rx="2" transform="rotate(0 660 184)"/><rect x="658" y="149" width="4" height="20" rx="2" transform="rotate(24 660 184)"/><rect x="658" y="149" width="4" height="20" rx="2" transform="rotate(48 660 184)"/><rect x="658" y="149" width="4" height="20" rx="2" transform="rotate(72 660 184)"/><rect x="658" y="149" width="4" height="20" rx="2" transform="rotate(96 660 184)"/><rect x="658" y="149" width="4" height="20" rx="2" transform="rotate(120 660 184)"/><rect x="658" y="149" width="4" height="20" rx="2" transform="rotate(144 660 184)"/><rect x="658" y="149" width="4" height="20" rx="2" transform="rotate(168 660 184)"/><rect x="658" y="149" width="4" height="20" rx="2" transform="rotate(192 660 184)"/><rect x="658" y="149" width="4" height="20" rx="2" transform="rotate(216 660 184)"/><rect x="658" y="149" width="4" height="20" rx="2" transform="rotate(240 660 184)"/><rect x="658" y="149" width="4" height="20" rx="2" transform="rotate(264 660 184)"/><rect x="658" y="149" width="4" height="20" rx="2" transform="rotate(288 660 184)"/><rect x="658" y="149" width="4" height="20" rx="2" transform="rotate(312 660 184)"/><rect x="658" y="149" width="4" height="20" rx="2" transform="rotate(336 660 184)"/></g><path d="M660 150v-4" stroke="#fff" stroke-opacity=".6" stroke-width="3"/></g><circle cx="660" cy="184" r="10" fill="#1d2024" stroke="#6b7077" stroke-width="2"/></g>
+            <g class="dmc-arcs" fill="none" stroke="#bff6ff" stroke-width="1.6"><polyline/><polyline/><polyline/></g>
+          </svg>
+        </div>
+      </div>
+
+      <div class="intro__speedo"><b>00</b><span class="mono">mph</span></div>
+      <div class="intro__flash"></div>
+
+      <div class="intro__brand">
+        <svg class="intro__logo" viewBox="0 0 64 64">
+          <path class="mk-axis" d="M8 32h48" stroke-width="2.5"/>
+          <path class="mk-s" d="M39.39 14A12 12 0 1 0 29 32" fill="none" stroke-width="6"/>
+          <path class="mk-s" d="M35 32A12 12 0 1 1 24.61 50" fill="none" stroke-width="6"/>
+          <circle class="mk-dot" cx="47" cy="11" r="4"/>
+        </svg>
+        <svg class="intro__word" viewBox="0 0 100 24"><path fill="none" stroke-width="3" stroke-miterlimit="1.5" d="M11.33 4.5A5 5 0 1 0 7 12M7 12A5 5 0 1 1 2.67 19.5M22 2v20M31 22V2l14 20V2M53 22l8-20 8 20M56.2 15h9.6M94.66 5.57A10 10 0 1 0 97 12h-8"/></svg>
+        <p class="intro__name">John Ray Cacananta</p>
+        <p class="intro__role">Full-Stack Developer / AI Security / Cloud / Automation</p>
+      </div>
+    </div>
+    <button class="intro__skip mono" type="button">Skip intro <kbd>Esc</kbd></button>
+  </div>
+
   <!-- ============ HEADER / ARRIVAL ============ -->
   <header class="hero" id="top">
     <div class="bar">
-      <a class="bar__brand" href="#top" aria-label="sinagdevv, back to top">
-        <span class="bar__dot" aria-hidden="true"></span>sinagdevv
+      <a class="bar__brand" href="#top" aria-label="SINAG, sinagdevv — back to top">
+        <svg class="bar__mark" aria-hidden="true" focusable="false"><use href="#sinag-mark"/></svg>
+        <svg class="bar__word" aria-hidden="true" focusable="false"><use href="#sinag-word"/></svg>
       </a>
       <nav class="bar__nav" aria-label="Primary">
         <ul>
@@ -41,6 +143,7 @@
       </nav>
     </div>
 
+    <div class="hero__light" aria-hidden="true"></div>
     <div class="hero__inner container">
       <div class="hero__copy">
         <p class="eyebrow hero__eyebrow">Developer Portfolio <span aria-hidden="true">/</span> Vol. 2026</p>
@@ -122,6 +225,7 @@
 
     <!-- ============ ABOUT ============ -->
     <section class="section section--light" id="about" data-era="Past" aria-labelledby="about-title">
+      <span class="guide" aria-hidden="true"></span>
       <div class="container about">
         <p class="eyebrow" data-reveal><span class="tc">01</span> Origin</p>
         <h2 class="section__title" id="about-title" data-reveal="mask"><span>About Me</span></h2>
@@ -146,26 +250,27 @@
       <div class="container">
         <p class="eyebrow" data-reveal><span class="tc">02</span> Instruments</p>
         <h2 class="section__title" id="skills-title" data-reveal="mask"><span>Technical Skills</span></h2>
-        <div class="skills" data-reveal>
-          <div class="skill"><h3><span class="mono">01</span> Languages</h3>
+        <div class="skills-map" aria-hidden="true" data-reveal></div>
+        <div class="skills">
+          <div class="skill" data-reveal><h3><span class="mono">01</span> Languages</h3>
             <ul><li>Python</li><li>Java</li><li>JavaScript</li><li>TypeScript</li><li>SQL</li><li>HTML5</li><li>CSS3</li><li>Bash</li><li>PowerShell</li></ul></div>
-          <div class="skill"><h3><span class="mono">02</span> Frontend</h3>
+          <div class="skill" data-reveal><h3><span class="mono">02</span> Frontend</h3>
             <ul><li>React</li><li>Next.js</li><li>Vite</li><li>Tailwind CSS</li><li>Bootstrap</li><li>Responsive Web Design</li><li>JavaFX</li></ul></div>
-          <div class="skill"><h3><span class="mono">03</span> Backend</h3>
+          <div class="skill" data-reveal><h3><span class="mono">03</span> Backend</h3>
             <ul><li>FastAPI</li><li>Node.js</li><li>Express.js</li><li>REST APIs</li><li>Serverless Functions</li><li>Supabase Edge Functions</li><li>Google Apps Script</li><li>Authentication &amp; Authorization</li><li>API Integration</li></ul></div>
-          <div class="skill"><h3><span class="mono">04</span> Databases</h3>
+          <div class="skill" data-reveal><h3><span class="mono">04</span> Databases</h3>
             <ul><li>PostgreSQL</li><li>MySQL</li><li>SQLite</li><li>SQLite FTS5</li><li>Supabase</li><li>Firebase Firestore</li><li>pgvector</li><li>Data Modeling</li><li>ETL</li><li>Data Validation</li></ul></div>
-          <div class="skill"><h3><span class="mono">05</span> AI / ML</h3>
+          <div class="skill" data-reveal><h3><span class="mono">05</span> AI / ML</h3>
             <ul><li>PyTorch</li><li>Scikit-learn</li><li>NumPy</li><li>Pandas</li><li>Matplotlib</li><li>Vector Embeddings</li><li>Semantic Search</li><li>RAG</li><li>LLM Integration</li><li>Ollama</li><li>Local AI Inference</li></ul></div>
-          <div class="skill skill--accent"><h3><span class="mono">06</span> AI Security</h3>
+          <div class="skill skill--accent" data-reveal><h3><span class="mono">06</span> AI Security</h3>
             <ul><li>Model Context Protocol</li><li>AI Agent Orchestration</li><li>Open Policy Agent</li><li>Rego</li><li>Intent-Based Authorization</li><li>Causal Graphs</li><li>AI Governance</li><li>Audit Logging</li></ul></div>
-          <div class="skill"><h3><span class="mono">07</span> Cloud / DevOps</h3>
+          <div class="skill" data-reveal><h3><span class="mono">07</span> Cloud / DevOps</h3>
             <ul><li>AWS</li><li>Microsoft Azure</li><li>Docker</li><li>Vercel</li><li>Linux</li><li>Git</li><li>GitHub</li><li>GitLab</li><li>CI/CD</li></ul></div>
-          <div class="skill"><h3><span class="mono">08</span> Automation</h3>
+          <div class="skill" data-reveal><h3><span class="mono">08</span> Automation</h3>
             <ul><li>n8n</li><li>Power Automate</li><li>UiPath</li><li>RPA</li><li>Microsoft Power Platform</li><li>SharePoint</li><li>Google Workspace APIs</li><li>Webhooks</li><li>Workflow Orchestration</li></ul></div>
-          <div class="skill"><h3><span class="mono">09</span> Tools</h3>
+          <div class="skill" data-reveal><h3><span class="mono">09</span> Tools</h3>
             <ul><li>VS Code</li><li>IntelliJ IDEA</li><li>Kiro</li><li>Postman</li><li>Power BI</li><li>Claude Code</li><li>Codex</li><li>OpenCode</li><li>OpenClaw</li></ul></div>
-          <div class="skill"><h3><span class="mono">10</span> Systems / Networking</h3>
+          <div class="skill" data-reveal><h3><span class="mono">10</span> Systems / Networking</h3>
             <ul><li>Windows</li><li>Ubuntu</li><li>Debian</li><li>Kali Linux</li><li>Parrot OS</li><li>BlackArch Linux</li><li>Cisco Networking Fundamentals</li></ul></div>
         </div>
       </div>
@@ -194,6 +299,11 @@
             </ul>
           </div>
         </div>
+        <a class="handoff" href="#experience" data-reveal>
+          <span class="handoff__line" aria-hidden="true"></span>
+          <span class="handoff__label mono">Foundation <span aria-hidden="true">→</span> Practice</span>
+          <span class="handoff__text">Continue to professional experience <span class="arrow" aria-hidden="true">↓</span></span>
+        </a>
       </div>
     </section>
 
@@ -321,7 +431,7 @@
         <h2 class="section__title" id="experience-title" data-reveal="mask"><span>Professional Experience</span></h2>
         <ol class="timeline">
           <li class="timeline__item" data-reveal>
-            <p class="timeline__date mono"><time datetime="2026-10">Oct 2026</time> – Present · Remote</p>
+            <p class="timeline__date"><time class="led" datetime="2026-10">OCT 2026</time><span>to Present · Remote</span></p>
             <h3>AI Automation Engineer Intern</h3>
             <p class="timeline__org">AgentGenius.ai / KeywordGenius</p>
             <ul>
@@ -332,7 +442,7 @@
             </ul>
           </li>
           <li class="timeline__item" data-reveal>
-            <p class="timeline__date mono"><time datetime="2026-08">Aug 2026</time> – Present · Remote</p>
+            <p class="timeline__date"><time class="led" datetime="2026-08">AUG 2026</time><span>to Present · Remote</span></p>
             <h3>Data Innovation Track Intern</h3>
             <p class="timeline__org">Eskwelabs</p>
             <ul>
@@ -342,7 +452,7 @@
             </ul>
           </li>
           <li class="timeline__item" data-reveal>
-            <p class="timeline__date mono"><time datetime="2026-06">Jun 2026</time> – <time datetime="2026-10">Oct 2026</time> · Remote</p>
+            <p class="timeline__date"><time class="led" datetime="2026-06">JUN 2026</time><span>to <time datetime="2026-10">Oct 2026</time> · Remote</span></p>
             <h3>Machine Learning Intern</h3>
             <p class="timeline__org">FlyRank AI</p>
             <ul>
@@ -497,7 +607,7 @@
             <li><span class="mono">LinkedIn</span><a href="https://www.linkedin.com/in/jrcacananta/" target="_blank" rel="noopener noreferrer">in/jrcacananta<span class="sr-only"> (opens in new tab)</span> <span class="arrow" aria-hidden="true">↗</span></a></li>
           </ul>
           <div class="arrival mono" aria-hidden="true" data-reveal>
-            <span class="arrival__label">Arrival</span>
+            <span class="arrival__label">Destination reached</span>
             <span class="arrival__time"><b data-clock="hh">--</b><em>:</em><b data-clock="mm">--</b></span>
             <span class="arrival__label">MNL</span>
           </div>
@@ -532,9 +642,9 @@
   <!-- ============ FOOTER ============ -->
   <footer class="footer">
     <div class="container footer__inner">
-      <p class="footer__name">John Ray Cacananta <span class="mono">/ sinagdevv</span></p>
+      <p class="footer__name"><svg class="footer__mark" aria-hidden="true" focusable="false"><use href="#sinag-mark"/></svg>John Ray Cacananta <span class="mono">/ sinagdevv</span></p>
       <p class="footer__msg">Thanks for traveling through. Where we’re going, we still need well-tested code.</p>
-      <p class="footer__meta mono">© <span data-year>2026</span> John Ray Cacananta · <a href="#top">Back to top ↑</a></p>
+      <p class="footer__meta mono">© <span data-year>2026</span> John Ray Cacananta · <a href="#top">Back to top ↑</a> <span class="footer__replay">· <button class="replay" type="button">Replay intro</button></span></p>
     </div>
   </footer>
 </body>

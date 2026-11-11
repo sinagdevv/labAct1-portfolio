@@ -7,6 +7,7 @@
 
   const $ = (sel, ctx = document) => ctx.querySelector(sel);
   const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
+  const root = document.documentElement;
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
 
@@ -31,14 +32,19 @@
   tick();
   setInterval(tick, 15000);
 
-  // Contact scene: the arrival readout cycles briefly, then settles on the real time.
-  function settleArrival(container) {
+  // Time-circuit readouts cycle briefly, then settle on the real Manila time.
+  const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+  function settleClock(container) {
     const digits = $$('[data-clock]', container);
     if (reduceMotion || !digits.length) return;
     digits.forEach((d) => { d.dataset.scrambling = '1'; });
     let frames = 0;
     const id = setInterval(() => {
-      digits.forEach((d) => { d.textContent = String(Math.floor(Math.random() * 100)).padStart(2, '0'); });
+      digits.forEach((d) => {
+        d.textContent = d.dataset.clock === 'month'
+          ? MONTHS[Math.floor(Math.random() * 12)]
+          : String(Math.floor(Math.random() * 10 ** d.textContent.length)).padStart(d.textContent.length, '0');
+      });
       if (++frames > 10) {
         clearInterval(id);
         digits.forEach((d) => { delete d.dataset.scrambling; });
@@ -49,15 +55,37 @@
 
   /* ---------- Section reveals ---------- */
   // Stagger siblings only where order carries meaning (grids of peers).
-  $$('.projects__grid, .goals, .creds').forEach((group) => {
-    [...group.children].forEach((child, i) => child.style.setProperty('--d', `${i * 90}ms`));
+  $$('.skills, .projects__grid, .goals, .creds').forEach((group) => {
+    [...group.children].forEach((child, i) => child.style.setProperty('--d', `${Math.min(i, 5) * 80}ms`));
   });
+
+  /* ---------- Skills map: one segment per category, sized by how many tools it holds ---------- */
+  const skillMap = $('.skills-map');
+  const skillGroups = $$('.skill');
+  if (skillMap && skillGroups.length) {
+    const total = $$('.skill li').length;
+    skillMap.innerHTML = `<p class="skills-map__label mono">${skillGroups.length} systems <span>·</span> ${total} tools</p><div class="skills-map__bar"></div>`;
+    const bar = $('.skills-map__bar', skillMap);
+    skillGroups.forEach((group, i) => {
+      const seg = document.createElement('span');
+      seg.style.flexGrow = $$('li', group).length;
+      seg.style.setProperty('--d', `${i * 45}ms`);
+      seg.title = group.querySelector('h3').textContent.replace(/^\s*\d+\s*/, '');
+      if (group.classList.contains('skill--accent')) seg.classList.add('is-accent');
+      bar.append(seg);
+      const link = (on) => { seg.classList.toggle('is-hot', on); group.classList.toggle('is-hot', on); };
+      [seg, group].forEach((node) => {
+        node.addEventListener('pointerenter', () => link(true));
+        node.addEventListener('pointerleave', () => link(false));
+      });
+    });
+  }
 
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
       entry.target.classList.add('is-in');
-      if (entry.target.classList.contains('arrival')) settleArrival(entry.target);
+      if (entry.target.classList.contains('arrival')) settleClock(entry.target);
       revealObserver.unobserve(entry.target);
     });
   }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
@@ -146,19 +174,32 @@
     lastEight = now;
   });
 
+  /* ---------- Hero arrival: present-time circuits settle once the hero is visible ---------- */
+  const heroCircuit = $('.circuit__row--now');
+  if (root.classList.contains('intro-on')) {
+    document.addEventListener('sinag:intro-end', () => setTimeout(() => settleClock(heroCircuit), 700), { once: true });
+  } else {
+    setTimeout(() => settleClock(heroCircuit), 750);
+  }
+
+  $('.replay')?.addEventListener('click', () => window.SinagIntro?.play());
+
   /* ---------- Pointer depth (desktop, fine pointers only) ---------- */
   if (finePointer && !reduceMotion) {
     const hero = $('.hero');
     const panel = $('.circuit__panel');
+    const light = $('.hero__light');
     hero.addEventListener('pointermove', (e) => {
       const nx = (e.clientX / innerWidth) * 2 - 1;
       const ny = (e.clientY / innerHeight) * 2 - 1;
       panel.style.setProperty('--rx', `${(-ny * 4).toFixed(2)}deg`);
       panel.style.setProperty('--ry', `${(nx * 6).toFixed(2)}deg`);
+      light.style.transform = `translate3d(${nx * 6}vw, ${ny * 5}vh, 0)`;
     });
     hero.addEventListener('pointerleave', () => {
       panel.style.setProperty('--rx', '0deg');
       panel.style.setProperty('--ry', '0deg');
+      light.style.transform = '';
     });
 
     $$('.project__media').forEach((media) => {
@@ -187,6 +228,18 @@
     gsap.fromTo('.circuit', { y: 0, scale: 1, opacity: 1 }, {
       yPercent: -10, opacity: 0.3, ease: 'none',
       scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true },
+    });
+
+    // About: a fine guide line descends from the hero's time axis into the section.
+    gsap.fromTo('.guide', { scaleY: 0 }, {
+      scaleY: 1, ease: 'none',
+      scrollTrigger: { trigger: '#about', start: 'top 90%', end: 'top 25%', scrub: 0.4 },
+    });
+
+    // Experience: each date circuit lights while its role is being read.
+    $('.timeline').classList.add('is-tracked');
+    $$('.timeline__item').forEach((item) => {
+      ScrollTrigger.create({ trigger: item, start: 'top 65%', end: 'bottom 35%', toggleClass: 'is-active' });
     });
 
     // Experience: the timeline line charges as it is read.

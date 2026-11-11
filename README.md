@@ -13,8 +13,10 @@ past (About, Skills, Education) through the present (Projects, Experience) to th
 labAct1-portfolio/
 ├── index.html            # all content, semantic HTML5
 ├── css/styles.css        # design tokens, layout, motion, responsive rules
+├── js/intro.js           # the DeLorean arrival intro (GSAP timeline)
 ├── js/main.js            # reveals, progress instrument, clock, form, scroll scenes
 ├── assets/
+│   ├── brand/            # SINAG logo + monogram, dark and light variants
 │   ├── images/           # real screenshots of the live project sites
 │   └── graphics/         # favicon
 └── README.md
@@ -55,7 +57,26 @@ All paths are relative, so the site works from a project sub-path.
 | — | Image with alt text | Project screenshots, each with descriptive `alt` |
 | — | Ordered + unordered lists, table, form, semantic elements | `<ol>` goals/timeline, `<ul>` skills, `<table>`, `<form>`, `<header> <nav> <main> <section> <article> <figure> <footer>` |
 | — | Internal + external links | Section anchors; GitHub, LinkedIn, and live demo links |
-| — | Responsive | Tested at 1920, 1440, 768, 390, 375 px |
+| — | Responsive | Tested at 1920, 1440, 1024, 768, 390, 375 px |
+
+## The DeLorean intro
+
+A ~5 second opening plays once per browser session: the temporal system powers on, an original
+DMC-12-inspired illustration is lit and accelerates from 00 to 88 mph, a temporal displacement
+opens, and the SINAG mark resolves before handing off to the hero.
+
+- **Skip** with the *Skip intro* button, the `Esc` key, or by scrolling.
+- **Replay** from the footer (*Replay intro*).
+- Visitors with `prefers-reduced-motion` never get the animated intro.
+- A failsafe removes the overlay after 9 seconds no matter what, and the page works fully without it.
+- No audio is used.
+
+## SINAG brand
+
+*Sinag* is Filipino for “ray of light”. The monogram is a geometric S split along a cyan time
+axis, with the lower half displaced forward, as if it already jumped. The amber dot is the light
+source. Files live in `assets/brand/` (`sinag-logo`, `sinag-mark`, each with a `-light` variant)
+and are pure SVG paths, so they render without any font.
 
 ## Notes on behaviour
 
