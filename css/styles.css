@@ -245,7 +245,6 @@ a { color: inherit; }
   padding-top: clamp(3rem, 8vh, 6rem);
   padding-bottom: clamp(2rem, 6vh, 4rem);
 }
-.hero__eyebrow { margin-bottom: 1.5rem; }
 .hero__name {
   font-size: clamp(2.75rem, 7.4vw, 7.5rem);
   font-weight: 820;
@@ -458,11 +457,12 @@ a { color: inherit; }
   transition: scale 1.2s var(--ease-out), translate 900ms var(--ease-out);
 }
 .portrait__cap {
-  display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.35rem 1rem;
   padding: 0.85rem 0.45rem 0.3rem;
   font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase;
   color: var(--silver);
 }
+.portrait__cap span { white-space: nowrap; }
 .portrait__cap span:first-child { color: var(--paper); }
 .portrait__dot { display: inline-block; width: 7px; height: 7px; margin-right: 0.55rem; border-radius: 50%; background: var(--amber); vertical-align: 0.05em; }
 .about__text p + p { margin-top: 1.25rem; }
@@ -511,6 +511,8 @@ a { color: inherit; }
   color: var(--ink-2);
 }
 .edu-table td { font-size: clamp(1.1rem, 1.6vw, 1.3rem); font-weight: 560; letter-spacing: -0.012em; line-height: 1.35; }
+.school { display: flex; align-items: center; gap: 1rem; }
+.school__logo { flex: none; width: auto; height: 3.25rem; }
 .muted { display: block; margin-top: 0.2rem; font-size: 0.95rem; font-weight: 400; letter-spacing: 0; color: var(--ink-2); }
 .honors { padding: 1.5rem; border-radius: var(--radius); background: var(--paper-2); }
 .honors h3 { font-size: 0.6875rem; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-2); margin-bottom: 0.5rem; }
@@ -786,11 +788,10 @@ a { color: inherit; }
 
 /* Footer */
 .footer { border-top: 1px solid var(--line-dark); padding: 3rem 0 calc(3rem + env(safe-area-inset-bottom)); }
-.footer__inner { display: grid; grid-template-columns: auto 1fr auto; gap: 1rem 2.5rem; align-items: baseline; }
-.footer__name { font-weight: 650; }
+.footer__inner { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.75rem 2.5rem; }
+.footer__name { display: flex; align-items: center; gap: 0.65rem; font-weight: 650; }
 .footer__name .mono { font-weight: 400; font-size: 0.8125rem; color: var(--muted); }
-.footer__msg { color: var(--silver); }
-.footer__meta { font-size: 0.75rem; color: var(--muted); }
+.footer__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0 1.5rem; font-size: 0.75rem; color: var(--muted); }
 .footer__meta a { display: inline-block; padding-block: 0.6rem; text-underline-offset: 3px; }
 
 /* ---------- 8. Motion ---------- */
@@ -813,7 +814,6 @@ a { color: inherit; }
   .circuit__row--origin .cell b { animation-delay: 800ms; }
   .hero__name .line > span { animation: rise 1000ms 150ms var(--ease-out) backwards; }
   .hero__name .line:nth-child(2) > span { animation-delay: 230ms; }
-  .hero__eyebrow { animation: fade-up 600ms 100ms var(--ease-out) backwards; }
   .hero__role { animation: fade-up 700ms 550ms var(--ease-out) backwards; }
   .hero__tagline { animation: fade-up 700ms 650ms var(--ease-out) backwards; }
   .hero__actions { animation: fade-up 700ms 750ms var(--ease-out) backwards; }
@@ -865,7 +865,7 @@ a { color: inherit; }
   .timeline__date { grid-row: auto; margin-bottom: 0.4rem; }
   .goals { grid-template-columns: 1fr; }
   .contact__lead { margin-top: -1rem; }
-  .footer__inner { grid-template-columns: 1fr; }
+  .footer__inner { flex-direction: column; align-items: flex-start; }
   .odometer, .toast { display: none; }
 }
 
@@ -889,13 +889,14 @@ a { color: inherit; }
   .ledger li { grid-template-columns: 1fr; }
   .ledger time { grid-column: 1; grid-row: auto; padding-top: 0.25rem; }
   .arrival__time { font-size: 2rem; }
+  .footer__meta > span:first-child { flex-basis: 100%; }
 }
 
 /* ---------- 10. Brand, hero light, section transitions ---------- */
 /* No overflow lock: toggling it relayouts the whole page at hand-off. Scrolling skips the intro instead. */
 /* Hero entrance waits for the intro. Explicit targets, not `.hero *`: a universal selector here makes
    removing the class restyle the entire document (measured: one 162ms style recalc at hand-off). */
-.intro-on :is(.bar, .hero__eyebrow, .hero__name .line > span, .hero__role, .hero__tagline, .hero__actions,
+.intro-on :is(.bar, .hero__name .line > span, .hero__role, .hero__tagline, .hero__actions,
   .circuit, .circuit__trace, .cell b, .axis__energy, .axis__future, .axis__marks) { animation-play-state: paused; }
 
 .hero__light {
@@ -907,13 +908,6 @@ a { color: inherit; }
 }
 .hero__inner, .axis { position: relative; z-index: 1; }
 
-.guide {
-  position: absolute; top: 0; z-index: 1;
-  left: max(var(--gutter), calc((100% - var(--container)) / 2));
-  width: 1px; height: calc(var(--section-y) - 1.75rem);
-  background: linear-gradient(180deg, var(--cyan-ink), rgba(0, 111, 133, 0.15));
-  transform-origin: top;
-}
 
 .skills-map { margin-bottom: 2.25rem; }
 .skills-map__label { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2); margin-bottom: 0.75rem; }
@@ -960,15 +954,14 @@ a { color: inherit; }
 .timeline.is-tracked .timeline__item:not(.is-active) .led { color: rgba(255, 178, 63, 0.4); }
 .timeline__item.is-active .led { border-color: rgba(255, 178, 63, 0.35); }
 
-.footer__mark { width: 28px; height: 28px; margin-right: 0.6rem; vertical-align: -8px; color: var(--silver-2); }
+.footer__mark { flex: none; width: 28px; height: 28px; color: var(--silver-2); }
 .replay {
   padding: 0.6rem 0; border: 0; background: none;
   font: inherit; color: inherit; cursor: pointer;
   text-decoration: underline; text-underline-offset: 3px;
 }
 @media (hover: hover) { .replay:hover { color: var(--paper); } }
-.footer__replay { white-space: nowrap; }
-html:not(.js) .footer__replay { display: none; }
+html:not(.js) .replay { display: none; }
 
 /* ---------- 11. Intro: the DeLorean arrival ---------- */
 .intro { display: none; }

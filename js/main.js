@@ -270,12 +270,6 @@
       scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true },
     });
 
-    // About: a fine guide line descends from the hero's time axis into the section.
-    gsap.fromTo('.guide', { scaleY: 0 }, {
-      scaleY: 1, ease: 'none',
-      scrollTrigger: { trigger: '#about', start: 'top 90%', end: 'top 25%', scrub: 0.4 },
-    });
-
     // Experience: each date circuit lights while its role is being read.
     $('.timeline').classList.add('is-tracked');
     $$('.timeline__item').forEach((item) => {
