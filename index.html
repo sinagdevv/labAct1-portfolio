@@ -59,8 +59,10 @@
         <div class="intro__car">
           <span class="intro__trail intro__trail--a"></span>
           <span class="intro__trail intro__trail--b"></span>
-          <!-- Original illustration inspired by the DMC-12 profile: wedge nose, gull-wing seam, louvered fastback, turbine-style wheels. -->
-          <svg class="dmc" viewBox="0 0 840 250" overflow="visible">
+          <!-- Original illustration inspired by the DMC-12 profile: wedge nose, gull-wing seam, louvered fastback, turbine-style wheels.
+               Performance: this SVG is static and painted once. Everything that moves (spokes, light sweep, beam, arcs)
+               is a separate composited layer on top, so animation never repaints the body. -->
+          <svg class="dmc" viewBox="0 0 840 250">
             <defs>
               <linearGradient id="dmc-steel" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0" stop-color="#f1f2f3"/><stop offset=".32" stop-color="#c3c8cd"/>
@@ -76,34 +78,40 @@
               <linearGradient id="dmc-beam" x1="0" y1="0" x2="1" y2="0">
                 <stop offset="0" stop-color="#fff6dc" stop-opacity=".7"/><stop offset="1" stop-color="#fff6dc" stop-opacity="0"/>
               </linearGradient>
-              <linearGradient id="dmc-sheen" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
-              </linearGradient>
               <clipPath id="dmc-body-clip"><path d="M26 192 24 130 28 80 40 74 110 72 345 27 455 27 560 78 815 122 830 128 832 166 824 196 728 198A66 66 0 0 0 594 198H272A66 66 0 0 0 138 198H60Z"/></clipPath>
             </defs>
-            <polygon class="dmc-beam" points="830,128 1260,96 1260,222 830,150" fill="url(#dmc-beam)"/>
-            <circle cx="205" cy="184" r="64" fill="#050506"/><circle cx="660" cy="184" r="64" fill="#050506"/>
-            <g clip-path="url(#dmc-body-clip)">
-              <rect width="840" height="250" fill="url(#dmc-steel)"/>
-              <rect width="840" height="250" fill="url(#dmc-brush)"/>
-              <path d="M40 120 816 138" stroke="#fff" stroke-opacity=".55" stroke-width="1.5"/>
-              <path d="M40 123 816 141" stroke="#000" stroke-opacity=".25" stroke-width="1.5"/>
-              <path d="M20 168H840V200H20Z" fill="#141518"/>
-              <path d="M20 128h48v72H20ZM784 150h56v50h-56Z" fill="#0f1012"/>
-              <rect class="dmc-sheen" x="-320" y="0" width="260" height="250" fill="url(#dmc-sheen)" transform="skewX(-18)"/>
+            <g id="dmc-art">
+              <circle cx="205" cy="184" r="64" fill="#050506"/><circle cx="660" cy="184" r="64" fill="#050506"/>
+              <g clip-path="url(#dmc-body-clip)">
+                <rect width="840" height="250" fill="url(#dmc-steel)"/>
+                <rect width="840" height="250" fill="url(#dmc-brush)"/>
+                <path d="M40 120 816 138" stroke="#fff" stroke-opacity=".55" stroke-width="1.5"/>
+                <path d="M40 123 816 141" stroke="#000" stroke-opacity=".25" stroke-width="1.5"/>
+                <path d="M20 168H840V200H20Z" fill="#141518"/>
+                <path d="M20 128h48v72H20ZM784 150h56v50h-56Z" fill="#0f1012"/>
+              </g>
+              <path d="M548 82 456 34H382V84Z" fill="url(#dmc-glass)"/>
+              <path d="M548 82 456 34" stroke="#fff" stroke-opacity=".35"/>
+              <path d="M380 27V170H556L586 96" fill="none" stroke="#202327" stroke-width="1.6"/>
+              <path d="M345 27 110 72" stroke="#0b0c0e" stroke-width="3"/>
+              <path stroke="#0b0c0e" stroke-width="2" d="M320 32v8M296 37v8M272 41v8M248 46v8M224 50v8M200 55v8M176 59v8M152 64v8"/>
+              <rect x="24" y="84" width="10" height="22" rx="2" fill="#c8261b"/>
+              <rect x="798" y="138" width="16" height="7" rx="2" fill="#e8a032"/>
+              <rect x="826" y="130" width="6" height="14" rx="1.5" fill="#5a574e"/>
+              <circle cx="205" cy="184" r="56" fill="#0d0d0f"/><circle cx="205" cy="184" r="52" fill="none" stroke="#25272b" stroke-width="2"/><circle cx="205" cy="184" r="38" fill="url(#dmc-rim)"/>
+              <circle cx="660" cy="184" r="56" fill="#0d0d0f"/><circle cx="660" cy="184" r="52" fill="none" stroke="#25272b" stroke-width="2"/><circle cx="660" cy="184" r="38" fill="url(#dmc-rim)"/>
             </g>
-            <path d="M548 82 456 34H382V84Z" fill="url(#dmc-glass)"/>
-            <path d="M548 82 456 34" stroke="#fff" stroke-opacity=".35"/>
-            <path d="M380 27V170H556L586 96" fill="none" stroke="#202327" stroke-width="1.6"/>
-            <path d="M345 27 110 72" stroke="#0b0c0e" stroke-width="3"/>
-            <path stroke="#0b0c0e" stroke-width="2" d="M320 32v8M296 37v8M272 41v8M248 46v8M224 50v8M200 55v8M176 59v8M152 64v8"/>
-            <rect x="24" y="84" width="10" height="22" rx="2" fill="#c8261b"/>
-            <rect x="798" y="138" width="16" height="7" rx="2" fill="#e8a032"/>
-            <rect class="dmc-head" x="826" y="130" width="6" height="14" rx="1.5" fill="#fff6dc"/>
-            <g class="dmc-wheel"><circle cx="205" cy="184" r="56" fill="#0d0d0f"/><circle cx="205" cy="184" r="52" fill="none" stroke="#25272b" stroke-width="2"/><circle cx="205" cy="184" r="38" fill="url(#dmc-rim)"/><g class="dmc-spin" style="transform-origin:205px 184px"><g fill="#2c3035"><rect x="203" y="149" width="4" height="20" rx="2" transform="rotate(0 205 184)"/><rect x="203" y="149" width="4" height="20" rx="2" transform="rotate(24 205 184)"/><rect x="203" y="149" width="4" height="20" rx="2" transform="rotate(48 205 184)"/><rect x="203" y="149" width="4" height="20" rx="2" transform="rotate(72 205 184)"/><rect x="203" y="149" width="4" height="20" rx="2" transform="rotate(96 205 184)"/><rect x="203" y="149" width="4" height="20" rx="2" transform="rotate(120 205 184)"/><rect x="203" y="149" width="4" height="20" rx="2" transform="rotate(144 205 184)"/><rect x="203" y="149" width="4" height="20" rx="2" transform="rotate(168 205 184)"/><rect x="203" y="149" width="4" height="20" rx="2" transform="rotate(192 205 184)"/><rect x="203" y="149" width="4" height="20" rx="2" transform="rotate(216 205 184)"/><rect x="203" y="149" width="4" height="20" rx="2" transform="rotate(240 205 184)"/><rect x="203" y="149" width="4" height="20" rx="2" transform="rotate(264 205 184)"/><rect x="203" y="149" width="4" height="20" rx="2" transform="rotate(288 205 184)"/><rect x="203" y="149" width="4" height="20" rx="2" transform="rotate(312 205 184)"/><rect x="203" y="149" width="4" height="20" rx="2" transform="rotate(336 205 184)"/></g><path d="M205 150v-4" stroke="#fff" stroke-opacity=".6" stroke-width="3"/></g><circle cx="205" cy="184" r="10" fill="#1d2024" stroke="#6b7077" stroke-width="2"/></g>
-            <g class="dmc-wheel"><circle cx="660" cy="184" r="56" fill="#0d0d0f"/><circle cx="660" cy="184" r="52" fill="none" stroke="#25272b" stroke-width="2"/><circle cx="660" cy="184" r="38" fill="url(#dmc-rim)"/><g class="dmc-spin" style="transform-origin:660px 184px"><g fill="#2c3035"><rect x="658" y="149" width="4" height="20" rx="2" transform="rotate(0 660 184)"/><rect x="658" y="149" width="4" height="20" rx="2" transform="rotate(24 660 184)"/><rect x="658" y="149" width="4" height="20" rx="2" transform="rotate(48 660 184)"/><rect x="658" y="149" width="4" height="20" rx="2" transform="rotate(72 660 184)"/><rect x="658" y="149" width="4" height="20" rx="2" transform="rotate(96 660 184)"/><rect x="658" y="149" width="4" height="20" rx="2" transform="rotate(120 660 184)"/><rect x="658" y="149" width="4" height="20" rx="2" transform="rotate(144 660 184)"/><rect x="658" y="149" width="4" height="20" rx="2" transform="rotate(168 660 184)"/><rect x="658" y="149" width="4" height="20" rx="2" transform="rotate(192 660 184)"/><rect x="658" y="149" width="4" height="20" rx="2" transform="rotate(216 660 184)"/><rect x="658" y="149" width="4" height="20" rx="2" transform="rotate(240 660 184)"/><rect x="658" y="149" width="4" height="20" rx="2" transform="rotate(264 660 184)"/><rect x="658" y="149" width="4" height="20" rx="2" transform="rotate(288 660 184)"/><rect x="658" y="149" width="4" height="20" rx="2" transform="rotate(312 660 184)"/><rect x="658" y="149" width="4" height="20" rx="2" transform="rotate(336 660 184)"/></g><path d="M660 150v-4" stroke="#fff" stroke-opacity=".6" stroke-width="3"/></g><circle cx="660" cy="184" r="10" fill="#1d2024" stroke="#6b7077" stroke-width="2"/></g>
-            <g class="dmc-arcs" fill="none" stroke="#bff6ff" stroke-width="1.6"><polyline/><polyline/><polyline/></g>
           </svg>
+          <!-- Static reflection: painted once, rides along with the car's transform. -->
+          <svg class="dmc-reflect" viewBox="0 0 840 250"><use href="#dmc-art"/></svg>
+          <span class="dmc-sheen"><i></i></span>
+          <span class="dmc-wheel dmc-wheel--rear"><i class="dmc-blur"></i><svg viewBox="0 0 76 76"><g fill="#2c3035"><rect x="36" y="3" width="4" height="20" rx="2" transform="rotate(0 38 38)"/><rect x="36" y="3" width="4" height="20" rx="2" transform="rotate(24 38 38)"/><rect x="36" y="3" width="4" height="20" rx="2" transform="rotate(48 38 38)"/><rect x="36" y="3" width="4" height="20" rx="2" transform="rotate(72 38 38)"/><rect x="36" y="3" width="4" height="20" rx="2" transform="rotate(96 38 38)"/><rect x="36" y="3" width="4" height="20" rx="2" transform="rotate(120 38 38)"/><rect x="36" y="3" width="4" height="20" rx="2" transform="rotate(144 38 38)"/><rect x="36" y="3" width="4" height="20" rx="2" transform="rotate(168 38 38)"/><rect x="36" y="3" width="4" height="20" rx="2" transform="rotate(192 38 38)"/><rect x="36" y="3" width="4" height="20" rx="2" transform="rotate(216 38 38)"/><rect x="36" y="3" width="4" height="20" rx="2" transform="rotate(240 38 38)"/><rect x="36" y="3" width="4" height="20" rx="2" transform="rotate(264 38 38)"/><rect x="36" y="3" width="4" height="20" rx="2" transform="rotate(288 38 38)"/><rect x="36" y="3" width="4" height="20" rx="2" transform="rotate(312 38 38)"/><rect x="36" y="3" width="4" height="20" rx="2" transform="rotate(336 38 38)"/></g><path d="M38 4V0" stroke="#fff" stroke-opacity=".6" stroke-width="3"/><circle cx="38" cy="38" r="10" fill="#1d2024" stroke="#6b7077" stroke-width="2"/></svg></span>
+          <span class="dmc-wheel dmc-wheel--front"><i class="dmc-blur"></i><svg viewBox="0 0 76 76"><g fill="#2c3035"><rect x="36" y="3" width="4" height="20" rx="2" transform="rotate(0 38 38)"/><rect x="36" y="3" width="4" height="20" rx="2" transform="rotate(24 38 38)"/><rect x="36" y="3" width="4" height="20" rx="2" transform="rotate(48 38 38)"/><rect x="36" y="3" width="4" height="20" rx="2" transform="rotate(72 38 38)"/><rect x="36" y="3" width="4" height="20" rx="2" transform="rotate(96 38 38)"/><rect x="36" y="3" width="4" height="20" rx="2" transform="rotate(120 38 38)"/><rect x="36" y="3" width="4" height="20" rx="2" transform="rotate(144 38 38)"/><rect x="36" y="3" width="4" height="20" rx="2" transform="rotate(168 38 38)"/><rect x="36" y="3" width="4" height="20" rx="2" transform="rotate(192 38 38)"/><rect x="36" y="3" width="4" height="20" rx="2" transform="rotate(216 38 38)"/><rect x="36" y="3" width="4" height="20" rx="2" transform="rotate(240 38 38)"/><rect x="36" y="3" width="4" height="20" rx="2" transform="rotate(264 38 38)"/><rect x="36" y="3" width="4" height="20" rx="2" transform="rotate(288 38 38)"/><rect x="36" y="3" width="4" height="20" rx="2" transform="rotate(312 38 38)"/><rect x="36" y="3" width="4" height="20" rx="2" transform="rotate(336 38 38)"/></g><path d="M38 4V0" stroke="#fff" stroke-opacity=".6" stroke-width="3"/><circle cx="38" cy="38" r="10" fill="#1d2024" stroke="#6b7077" stroke-width="2"/></svg></span>
+          <svg class="dmc-beam" viewBox="0 0 840 250" overflow="visible">
+            <polygon points="830,128 1260,96 1260,222 830,150" fill="url(#dmc-beam)"/>
+            <rect x="826" y="130" width="6" height="14" rx="1.5" fill="#fff6dc"/>
+          </svg>
+          <svg class="dmc-arcs" viewBox="0 0 840 250" overflow="visible" fill="none" stroke="#bff6ff" stroke-width="1.6"><polyline/><polyline/><polyline/></svg>
         </div>
       </div>
 
@@ -230,6 +238,15 @@
         <p class="eyebrow" data-reveal><span class="tc">01</span> Origin</p>
         <h2 class="section__title" id="about-title" data-reveal="mask"><span>About Me</span></h2>
         <div class="about__grid">
+          <figure class="portrait" data-reveal>
+            <div class="portrait__frame">
+              <div class="portrait__img">
+                <img src="assets/images/sinagdev.jpg" width="1152" height="2048" loading="lazy" decoding="async" alt="Portrait of John Ray Cacananta wearing a navy cap, a denim jacket, and a National University lanyard.">
+              </div>
+              <figcaption class="portrait__cap mono"><span><i class="portrait__dot" aria-hidden="true"></i>John Ray Cacananta</span><span>BSIT · NU Fairview</span></figcaption>
+            </div>
+          </figure>
+          <div class="about__body">
           <div class="about__text">
             <p class="lead" data-reveal>I’m an Information Technology student at National University – Fairview who builds full-stack applications, AI security systems, and automation workflows.</p>
             <p data-reveal>My experience spans production work on a Shopify-integrated application, applied machine learning, and synthetic data modeling across three remote internships. I led the backend of DEVCON Kids Hub 2.0, engineered C.A.G.E. to decide whether an AI agent’s action should be allowed, denied, or escalated for approval, and co-built local-first AI tools with hackathon teams.</p>
@@ -241,6 +258,7 @@
             <div><dt>Also</dt><dd>Data Innovation Track Intern, Eskwelabs</dd></div>
             <div><dt>Focus</dt><dd>Full-stack · AI security · Cloud · Automation</dd></div>
           </dl>
+          </div>
         </div>
       </div>
     </section>
@@ -316,10 +334,14 @@
 
         <div class="projects">
           <article class="project project--wide" data-reveal>
-            <figure class="project__media">
-              <img src="assets/images/devcon-kids-hub.jpg" width="1200" height="750" loading="lazy" decoding="async" alt="DEVCON Kids Hub 2.0 sign-in page: a ‘Learn. Build. Belong.’ constellation illustration beside Google and email sign-in options.">
-              <figcaption class="mono">Live site screenshot</figcaption>
-            </figure>
+            <div class="project__media" style="--accent: #6a4be0; --accent-2: #f5c84c;">
+              <div class="shot-wrap">
+                <figure class="shot">
+                  <figcaption class="shot__bar mono"><span class="shot__dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="shot__url">devcon-kids-hub-2-0.vercel.app</span><span class="shot__tag">Live screenshot</span></figcaption>
+                  <img src="assets/images/devcon-kids-hub.jpg" width="1200" height="750" loading="lazy" decoding="async" alt="DEVCON Kids Hub 2.0 sign-in page: a ‘Learn. Build. Belong.’ constellation illustration beside Google and email sign-in options.">
+                </figure>
+              </div>
+            </div>
             <div class="project__body">
               <p class="project__meta mono"><span>01</span> Team Lead &amp; Backend Developer</p>
               <h3 class="project__title">DEVCON Kids Hub 2.0</h3>
@@ -333,10 +355,14 @@
           </article>
 
           <article class="project project--wide project--flip" data-reveal>
-            <figure class="project__media">
-              <img src="assets/images/cage.jpg" width="1200" height="750" loading="lazy" decoding="async" alt="C.A.G.E. showcase site explaining how human intent, action history, and data provenance lead to an ALLOW or DENY decision before an AI agent acts.">
-              <figcaption class="mono">Live site screenshot</figcaption>
-            </figure>
+            <div class="project__media" style="--accent: #f0b13c; --accent-2: #e9e4d8;">
+              <div class="shot-wrap">
+                <figure class="shot">
+                  <figcaption class="shot__bar mono"><span class="shot__dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="shot__url">cage-agent-security.vercel.app</span><span class="shot__tag">Live screenshot</span></figcaption>
+                  <img src="assets/images/cage.jpg" width="1200" height="750" loading="lazy" decoding="async" alt="C.A.G.E. showcase site explaining how human intent, action history, and data provenance lead to an ALLOW or DENY decision before an AI agent acts.">
+                </figure>
+              </div>
+            </div>
             <div class="project__body">
               <p class="project__meta mono"><span>02</span> AI agent security</p>
               <h3 class="project__title">C.A.G.E.</h3>
@@ -352,10 +378,14 @@
 
           <div class="projects__grid">
             <article class="project" data-reveal>
-              <figure class="project__media">
-                <img src="assets/images/bulldogs-xchange.jpg" width="1200" height="750" loading="lazy" decoding="async" alt="Bulldogs Xchange home page with the headline ‘Show your Bulldog pride.’ beside an illustrated campus merchandise display.">
-                <figcaption class="mono">Live site screenshot</figcaption>
-              </figure>
+              <div class="project__media" style="--accent: #2f5fd0; --accent-2: #e5b53a;">
+                <div class="shot-wrap">
+                  <figure class="shot">
+                    <figcaption class="shot__bar mono"><span class="shot__dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="shot__url">bulldogs-xchange-live-demo.vercel.app</span><span class="shot__tag">Live screenshot</span></figcaption>
+                    <img src="assets/images/bulldogs-xchange.jpg" width="1200" height="750" loading="lazy" decoding="async" alt="Bulldogs Xchange home page with the headline ‘Show your Bulldog pride.’ beside an illustrated campus merchandise display.">
+                  </figure>
+                </div>
+              </div>
               <div class="project__body">
                 <p class="project__meta mono"><span>03</span> Campus marketplace</p>
                 <h3 class="project__title">Bulldogs Xchange</h3>
@@ -369,10 +399,14 @@
             </article>
 
             <article class="project" data-reveal>
-              <figure class="project__media">
-                <img src="assets/images/mat-ah.jpg" width="1200" height="750" loading="lazy" decoding="async" alt="MAT-AH showcase: the headline ‘Remember what it was, not where you saved it.’ next to a sample local file search returning matching PDFs.">
-                <figcaption class="mono">Live site screenshot</figcaption>
-              </figure>
+              <div class="project__media" style="--accent: #8b5cf6; --accent-2: #f08a4b;">
+                <div class="shot-wrap">
+                  <figure class="shot">
+                    <figcaption class="shot__bar mono"><span class="shot__dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="shot__url">mat-ah-showcase.vercel.app</span><span class="shot__tag">Live screenshot</span></figcaption>
+                    <img src="assets/images/mat-ah.jpg" width="1200" height="750" loading="lazy" decoding="async" alt="MAT-AH showcase: the headline ‘Remember what it was, not where you saved it.’ next to a sample local file search returning matching PDFs.">
+                  </figure>
+                </div>
+              </div>
               <div class="project__body">
                 <p class="project__meta mono"><span>04</span> Co-developer</p>
                 <h3 class="project__title">MAT-AH</h3>
@@ -386,10 +420,14 @@
             </article>
 
             <article class="project" data-reveal>
-              <figure class="project__media">
-                <img src="assets/images/alvin.jpg" width="1200" height="750" loading="lazy" decoding="async" alt="A.L.V.I.N. map overview showing a monitored building in BGC, live outdoor weather readings, and smart, shaded, covered, and shortest route options.">
-                <figcaption class="mono">Live site screenshot</figcaption>
-              </figure>
+              <div class="project__media" style="--accent: #22b8cf; --accent-2: #2f6fb0;">
+                <div class="shot-wrap">
+                  <figure class="shot">
+                    <figcaption class="shot__bar mono"><span class="shot__dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="shot__url">alvin-seven.vercel.app</span><span class="shot__tag">Live screenshot</span></figcaption>
+                    <img src="assets/images/alvin.jpg" width="1200" height="750" loading="lazy" decoding="async" alt="A.L.V.I.N. map overview showing a monitored building in BGC, live outdoor weather readings, and smart, shaded, covered, and shortest route options.">
+                  </figure>
+                </div>
+              </div>
               <div class="project__body">
                 <p class="project__meta mono"><span>05</span> Backend Developer</p>
                 <h3 class="project__title">A.L.V.I.N.</h3>
@@ -404,10 +442,14 @@
             </article>
 
             <article class="project" data-reveal>
-              <figure class="project__media">
-                <img src="assets/images/tripwise.jpg" width="1200" height="750" loading="lazy" decoding="async" alt="TripWise welcome screen with a sea-turtle mascot in a life vest and the line ‘Fish smarter. Stay safer.’">
-                <figcaption class="mono">Live site screenshot</figcaption>
-              </figure>
+              <div class="project__media project__media--phone" style="--accent: #2a86d1; --accent-2: #8fd3ff;">
+                <div class="shot-wrap">
+                  <figure class="shot shot--phone">
+                    <figcaption class="shot__bar mono"><span class="shot__tag">Live screenshot</span></figcaption>
+                    <img src="assets/images/tripwise.jpg" width="1200" height="750" loading="lazy" decoding="async" alt="TripWise welcome screen with a sea-turtle mascot in a life vest and the line ‘Fish smarter. Stay safer.’">
+                  </figure>
+                </div>
+              </div>
               <div class="project__body">
                 <p class="project__meta mono"><span>06</span> Co-developer</p>
                 <h3 class="project__title">TripWise</h3>
@@ -472,7 +514,7 @@
         <h2 class="section__title section__title--sm" id="archive-title" data-reveal="mask"><span>More Projects</span></h2>
         <ul class="archive" data-reveal>
           <li class="archive__item">
-            <img class="archive__thumb" src="assets/images/mantika-check.jpg" width="1200" height="750" loading="lazy" decoding="async" alt="Mantika Check landing page showing four oil-condition states, from ‘Continue monitoring’ to ‘Replace oil’.">
+            <img class="archive__thumb" style="--accent: #2fae6b;" src="assets/images/mantika-check.jpg" width="1200" height="750" loading="lazy" decoding="async" alt="Mantika Check landing page showing four oil-condition states, from ‘Continue monitoring’ to ‘Replace oil’.">
             <div class="archive__main">
               <h3><span class="mono">07</span> Mantika Check</h3>
               <p>Helps street-food vendors track cooking-oil use and estimated degradation, combining fuzzy inference and Arrhenius modeling into explainable condition assessments.</p>
@@ -484,7 +526,7 @@
             </p>
           </li>
           <li class="archive__item">
-            <img class="archive__thumb" src="assets/images/brickbybrick.jpg" width="1200" height="750" loading="lazy" decoding="async" alt="BrickbyBrick product page for a brick-built character display set, with character options and pricing.">
+            <img class="archive__thumb" style="--accent: #e2551b;" src="assets/images/brickbybrick.jpg" width="1200" height="750" loading="lazy" decoding="async" alt="BrickbyBrick product page for a brick-built character display set, with character options and pricing.">
             <div class="archive__main">
               <h3><span class="mono">08</span> BrickbyBrick</h3>
               <p>LEGO-inspired storefront with responsive product displays, browsing interactions, and structured e-commerce layouts.</p>

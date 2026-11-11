@@ -89,8 +89,6 @@
       revealObserver.unobserve(entry.target);
     });
   }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
-  $$('[data-reveal]').forEach((el) => revealObserver.observe(el));
-
   /* ---------- Active navigation link ---------- */
   const navLinks = new Map($$('.bar__nav a').map((a) => [a.hash.slice(1), a]));
   const navAlias = { experience: 'projects', archive: 'projects' };
@@ -106,7 +104,25 @@
       });
     });
   }, { rootMargin: '-45% 0px -50% 0px' });
-  sections.forEach((s) => navObserver.observe(s));
+
+  // Observers start after the intro so they don't run every frame underneath the overlay — and not in the
+  // hand-off frame either: they wait for the overlay's fade, or start at once if the visitor scrolls first.
+  let observing = false;
+  const startObservers = () => {
+    if (observing) return;
+    observing = true;
+    $$('[data-reveal]').forEach((el) => revealObserver.observe(el));
+    sections.forEach((s) => navObserver.observe(s));
+  };
+  if (root.classList.contains('intro-on')) {
+    document.addEventListener('sinag:intro-end', () => {
+      setTimeout(startObservers, 750);
+      addEventListener('scroll', startObservers, { once: true, passive: true });
+    }, { once: true });
+    setTimeout(startObservers, 9000); // matches the <head> failsafe
+  } else {
+    startObservers();
+  }
 
   /* ---------- Progress instrument + speedometer (88 mph easter egg) ---------- */
   const bar = $('.progress__bar');
@@ -202,25 +218,49 @@
       light.style.transform = '';
     });
 
+    // Project previews: light follows the pointer; the framed window tilts a degree or two.
     $$('.project__media').forEach((media) => {
       media.addEventListener('pointermove', (e) => {
         const r = media.getBoundingClientRect();
-        const x = e.clientX - r.left;
-        const y = e.clientY - r.top;
-        media.style.setProperty('--mx', `${x}px`);
-        media.style.setProperty('--my', `${y}px`);
-        media.style.setProperty('--px', `${((x / r.width) - 0.5) * -10}px`);
-        media.style.setProperty('--py', `${((y / r.height) - 0.5) * -10}px`);
+        const nx = (e.clientX - r.left) / r.width - 0.5;
+        const ny = (e.clientY - r.top) / r.height - 0.5;
+        media.style.setProperty('--mx', `${(nx + 0.5) * 100}%`);
+        media.style.setProperty('--my', `${(ny + 0.5) * 100}%`);
+        media.style.setProperty('--rx', `${(-ny * 3).toFixed(2)}deg`);
+        media.style.setProperty('--ry', `${(nx * 4).toFixed(2)}deg`);
       });
       media.addEventListener('pointerleave', () => {
-        media.style.setProperty('--px', '0px');
-        media.style.setProperty('--py', '0px');
+        media.style.setProperty('--rx', '0deg');
+        media.style.setProperty('--ry', '0deg');
       });
     });
+
+    // Portrait: the plate tilts slightly and the photo drifts against it, like looking through glass.
+    const portrait = $('.portrait__frame');
+    if (portrait) {
+      portrait.addEventListener('pointermove', (e) => {
+        const r = portrait.getBoundingClientRect();
+        const nx = (e.clientX - r.left) / r.width - 0.5;
+        const ny = (e.clientY - r.top) / r.height - 0.5;
+        portrait.style.setProperty('--rx', `${(-ny * 4).toFixed(2)}deg`);
+        portrait.style.setProperty('--ry', `${(nx * 5).toFixed(2)}deg`);
+        portrait.style.setProperty('--px', `${(-nx * 8).toFixed(1)}px`);
+        portrait.style.setProperty('--py', `${(-ny * 8).toFixed(1)}px`);
+      });
+      portrait.addEventListener('pointerleave', () => {
+        ['--rx', '--ry'].forEach((v) => portrait.style.setProperty(v, '0deg'));
+        ['--px', '--py'].forEach((v) => portrait.style.setProperty(v, '0px'));
+      });
+    }
   }
 
   /* ---------- Scroll-scrubbed scenes (GSAP + ScrollTrigger, optional) ---------- */
-  if (window.gsap && window.ScrollTrigger && !reduceMotion) {
+  // Creating triggers measures the whole page (forced layout), so while the intro is playing this
+  // waits until it has ended and the browser is idle — the intro gets the main thread to itself.
+  let scenesReady = false;
+  function initScenes() {
+    if (scenesReady || !window.gsap || !window.ScrollTrigger || reduceMotion) return;
+    scenesReady = true;
     gsap.registerPlugin(ScrollTrigger);
 
     // Arrival → departure: the instrument recedes as the visitor leaves the hero.
@@ -254,15 +294,27 @@
       scrollTrigger: { trigger: '#goals', start: 'top bottom', end: 'top 25%', scrub: 0.4 },
     });
 
-    // Subtle screenshot parallax — desktop only.
+    // Subtle depth: each framed window drifts against its backdrop while scrolling — desktop only.
+    // Applied to the wrapper so it never crops the screenshot or fights the hover lift on .shot.
     gsap.matchMedia().add('(min-width: 900px)', () => {
-      $$('.project__media img').forEach((img) => {
-        gsap.fromTo(img, { yPercent: -3 }, {
-          yPercent: 3, ease: 'none',
-          scrollTrigger: { trigger: img.parentElement, start: 'top bottom', end: 'bottom top', scrub: true },
+      $$('.shot-wrap').forEach((wrap) => {
+        gsap.fromTo(wrap, { y: 14 }, {
+          y: -14, ease: 'none',
+          scrollTrigger: { trigger: wrap.parentElement, start: 'top bottom', end: 'bottom top', scrub: true },
         });
       });
     });
+
+    ScrollTrigger.config({ autoRefreshEvents: 'visibilitychange,DOMContentLoaded,load,resize' });
+    ScrollTrigger.refresh();
+  }
+
+  const whenIdle = (fn) => (window.requestIdleCallback ? requestIdleCallback(fn, { timeout: 1500 }) : setTimeout(fn, 200));
+  if (root.classList.contains('intro-on')) {
+    document.addEventListener('sinag:intro-end', () => setTimeout(() => whenIdle(initScenes), 800), { once: true });
+    setTimeout(() => whenIdle(initScenes), 9500); // matches the <head> failsafe if the intro never ran
+  } else {
+    whenIdle(initScenes);
   }
 
   /* ---------- Contact form: honest mailto workflow ---------- */
