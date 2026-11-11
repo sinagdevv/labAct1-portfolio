@@ -666,6 +666,7 @@ a { color: inherit; }
   transition: transform 500ms var(--ease-out), border-color 400ms var(--ease-out);
 }
 .archive__thumb--diagram { color: var(--silver); padding: 0.5rem; }
+.archive__thumb--center { object-position: center; } /* TripWise: the phone UI sits mid-frame */
 .archive__thumb--diagram .hub { fill: rgba(79, 227, 255, 0.2); stroke: var(--cyan); }
 .archive__thumb--diagram .node circle { fill: var(--graphite-800); stroke: var(--silver); stroke-width: 1; }
 .archive__thumb--diagram .flag { fill: rgba(255, 178, 63, 0.25); stroke: var(--amber); }
