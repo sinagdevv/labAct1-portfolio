@@ -35,6 +35,8 @@
           <li><a href="#about">About</a></li>
           <li><a href="#skills">Skills</a></li>
           <li><a href="#education">Education</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
     </div>
@@ -49,8 +51,8 @@
         <p class="hero__role">Full-Stack Developer <span aria-hidden="true">/</span> AI Security <span aria-hidden="true">/</span> Cloud <span aria-hidden="true">/</span> Automation</p>
         <p class="hero__tagline mono">Building what comes next.</p>
         <div class="hero__actions">
-          <a class="btn btn--primary" href="#about">About Me <span class="btn__arrow" aria-hidden="true">→</span></a>
-          <a class="btn btn--ghost" href="mailto:johnray.cacananta@gmail.com">Email Me</a>
+          <a class="btn btn--primary" href="#projects">Explore Projects <span class="btn__arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn--ghost" href="#contact">Contact Me</a>
         </div>
       </div>
 
@@ -110,7 +112,7 @@
   </div>
   <div class="odometer mono" aria-hidden="true">
     <span class="odometer__era">Arrival</span>
-    <span class="odometer__sec">00/03</span>
+    <span class="odometer__sec">00/09</span>
     <span class="odometer__mph"><b>000</b> mph</span>
   </div>
   <p class="toast mono" role="status" aria-live="polite"></p>
@@ -195,6 +197,336 @@
       </div>
     </section>
 
+    <!-- ============ SELECTED PROJECTS ============ -->
+    <section class="section section--dark" id="projects" data-era="Present" aria-labelledby="projects-title">
+      <div class="container">
+        <p class="eyebrow" data-reveal><span class="tc">04</span> Selected work</p>
+        <h2 class="section__title" id="projects-title" data-reveal="mask"><span>My Projects</span></h2>
+        <p class="section__intro" data-reveal>Ten shipped and in-progress builds. The first six are below; the rest are in the <a href="#archive">archive</a>.</p>
+
+        <div class="projects">
+          <article class="project project--wide" data-reveal>
+            <figure class="project__media">
+              <img src="assets/images/devcon-kids-hub.jpg" width="1200" height="750" loading="lazy" decoding="async" alt="DEVCON Kids Hub 2.0 sign-in page: a ‘Learn. Build. Belong.’ constellation illustration beside Google and email sign-in options.">
+              <figcaption class="mono">Live site screenshot</figcaption>
+            </figure>
+            <div class="project__body">
+              <p class="project__meta mono"><span>01</span> Team Lead &amp; Backend Developer</p>
+              <h3 class="project__title">DEVCON Kids Hub 2.0</h3>
+              <p>Centralized operations platform for DEVCON Kids. I led the team across architecture, delegation, backend, integration, and testing, and built role-based administration, volunteer management, event reporting, approval workflows, financial documentation, and AI-assisted knowledge retrieval.</p>
+              <p class="project__stack mono">React · Vite · Supabase · PostgreSQL · Google OAuth · pgvector · Edge Functions · Google Drive API · Recharts</p>
+              <p class="project__links">
+                <a href="https://devcon-kids-hub-2-0.vercel.app/" target="_blank" rel="noopener noreferrer">Live demo<span class="sr-only"> of DEVCON Kids Hub 2.0 (opens in new tab)</span> <span class="arrow" aria-hidden="true">↗</span></a>
+                <a href="https://github.com/Debb1ie/DEVCON-Kids-Hub-2.0" target="_blank" rel="noopener noreferrer">Source<span class="sr-only"> code of DEVCON Kids Hub 2.0 on GitHub (opens in new tab)</span> <span class="arrow" aria-hidden="true">↗</span></a>
+              </p>
+            </div>
+          </article>
+
+          <article class="project project--wide project--flip" data-reveal>
+            <figure class="project__media">
+              <img src="assets/images/cage.jpg" width="1200" height="750" loading="lazy" decoding="async" alt="C.A.G.E. showcase site explaining how human intent, action history, and data provenance lead to an ALLOW or DENY decision before an AI agent acts.">
+              <figcaption class="mono">Live site screenshot</figcaption>
+            </figure>
+            <div class="project__body">
+              <p class="project__meta mono"><span>02</span> AI agent security</p>
+              <h3 class="project__title">C.A.G.E.</h3>
+              <p class="project__sub">Causal Authorization and Governance Engine for AI Agents</p>
+              <p>Decides whether an AI agent <em>should</em> take an action, not just whether a tool is permitted. Intent-based authorization and causal reasoning return ALLOW, DENY, or REQUIRE_APPROVAL, backed by provenance tracking, attack-testing scenarios, and MCP integration tests.</p>
+              <p class="project__stack mono">Python · OPA · Rego · Docker · MCP · Causal Graphs · Policy-as-Code</p>
+              <p class="project__links">
+                <a href="https://cage-agent-security.vercel.app/" target="_blank" rel="noopener noreferrer">Live demo<span class="sr-only"> of C.A.G.E. (opens in new tab)</span> <span class="arrow" aria-hidden="true">↗</span></a>
+                <span class="project__private mono">Source: private repository</span>
+              </p>
+            </div>
+          </article>
+
+          <div class="projects__grid">
+            <article class="project" data-reveal>
+              <figure class="project__media">
+                <img src="assets/images/bulldogs-xchange.jpg" width="1200" height="750" loading="lazy" decoding="async" alt="Bulldogs Xchange home page with the headline ‘Show your Bulldog pride.’ beside an illustrated campus merchandise display.">
+                <figcaption class="mono">Live site screenshot</figcaption>
+              </figure>
+              <div class="project__body">
+                <p class="project__meta mono"><span>03</span> Campus marketplace</p>
+                <h3 class="project__title">Bulldogs Xchange</h3>
+                <p>Merchandise catalogs, inventory, reservations, and pickup coordination with role-based management for admins, staff, faculty, and students. Secure auth, rate limiting, idempotency controls, and Barky, an AI assistant.</p>
+                <p class="project__stack mono">React · Vite · TypeScript · Node.js · Supabase · PostgreSQL</p>
+                <p class="project__links">
+                  <a href="https://bulldogs-xchange-live-demo.vercel.app/" target="_blank" rel="noopener noreferrer">Live demo<span class="sr-only"> of Bulldogs Xchange (opens in new tab)</span> <span class="arrow" aria-hidden="true">↗</span></a>
+                  <a href="https://github.com/sinagdevv/bulldogs-xchange" target="_blank" rel="noopener noreferrer">Source<span class="sr-only"> code of Bulldogs Xchange on GitHub (opens in new tab)</span> <span class="arrow" aria-hidden="true">↗</span></a>
+                </p>
+              </div>
+            </article>
+
+            <article class="project" data-reveal>
+              <figure class="project__media">
+                <img src="assets/images/mat-ah.jpg" width="1200" height="750" loading="lazy" decoding="async" alt="MAT-AH showcase: the headline ‘Remember what it was, not where you saved it.’ next to a sample local file search returning matching PDFs.">
+                <figcaption class="mono">Live site screenshot</figcaption>
+              </figure>
+              <div class="project__body">
+                <p class="project__meta mono"><span>04</span> Co-developer</p>
+                <h3 class="project__title">MAT-AH</h3>
+                <p>Local-first AI second memory for Windows. Semantic search, cited document Q&amp;A, duplicate detection, reversible file organization, and notes across its Hanap, Sagot, Linis, Kilos, and Tala modules, with local models keeping files private.</p>
+                <p class="project__stack mono">Python · FastAPI · React · TypeScript · SQLite FTS5 · Ollama · PyTorch · CLIP · Whisper</p>
+                <p class="project__links">
+                  <a href="https://mat-ah-showcase.vercel.app/" target="_blank" rel="noopener noreferrer">Showcase<span class="sr-only"> of MAT-AH (opens in new tab)</span> <span class="arrow" aria-hidden="true">↗</span></a>
+                  <a href="https://github.com/Gabi-comm/MAT-AH" target="_blank" rel="noopener noreferrer">Source<span class="sr-only"> code of MAT-AH on GitHub (opens in new tab)</span> <span class="arrow" aria-hidden="true">↗</span></a>
+                </p>
+              </div>
+            </article>
+
+            <article class="project" data-reveal>
+              <figure class="project__media">
+                <img src="assets/images/alvin.jpg" width="1200" height="750" loading="lazy" decoding="async" alt="A.L.V.I.N. map overview showing a monitored building in BGC, live outdoor weather readings, and smart, shaded, covered, and shortest route options.">
+                <figcaption class="mono">Live site screenshot</figcaption>
+              </figure>
+              <div class="project__body">
+                <p class="project__meta mono"><span>05</span> Backend Developer</p>
+                <h3 class="project__title">A.L.V.I.N.</h3>
+                <p class="project__sub">Adaptive Living Virtual Intelligence Network</p>
+                <p>REST APIs for IoT sensor ingestion, environmental monitoring, comfort scoring, analytics, and emergency evacuation routing behind a collaborative 3D digital twin, built for the SparkFest Hackathon.</p>
+                <p class="project__stack mono">Python · FastAPI · Firebase Firestore · NetworkX · OpenWeatherMap · React · Three.js</p>
+                <p class="project__links">
+                  <a href="https://alvin-seven.vercel.app/" target="_blank" rel="noopener noreferrer">Live demo<span class="sr-only"> of A.L.V.I.N. (opens in new tab)</span> <span class="arrow" aria-hidden="true">↗</span></a>
+                  <a href="https://github.com/FerosC101/Alvin" target="_blank" rel="noopener noreferrer">Source<span class="sr-only"> code of A.L.V.I.N. on GitHub (opens in new tab)</span> <span class="arrow" aria-hidden="true">↗</span></a>
+                </p>
+              </div>
+            </article>
+
+            <article class="project" data-reveal>
+              <figure class="project__media">
+                <img src="assets/images/tripwise.jpg" width="1200" height="750" loading="lazy" decoding="async" alt="TripWise welcome screen with a sea-turtle mascot in a life vest and the line ‘Fish smarter. Stay safer.’">
+                <figcaption class="mono">Live site screenshot</figcaption>
+              </figure>
+              <div class="project__body">
+                <p class="project__meta mono"><span>06</span> Co-developer</p>
+                <h3 class="project__title">TripWise</h3>
+                <p>Mobile-first safety and economic decision support for fishers. Weather and marine risk, fuel costs, and trip profitability become a clear GO, CAUTION, or STAY call with AI-assisted explanations.</p>
+                <p class="project__stack mono">React · TypeScript · Vite · Tailwind CSS · Python · Supabase · MapLibre GL · Open-Meteo · Gemini</p>
+                <p class="project__links">
+                  <a href="https://tripwise-sooty.vercel.app/" target="_blank" rel="noopener noreferrer">Live demo<span class="sr-only"> of TripWise (opens in new tab)</span> <span class="arrow" aria-hidden="true">↗</span></a>
+                  <a href="https://github.com/Alvin187187/TripWise" target="_blank" rel="noopener noreferrer">Source<span class="sr-only"> code of TripWise on GitHub (opens in new tab)</span> <span class="arrow" aria-hidden="true">↗</span></a>
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ EXPERIENCE ============ -->
+    <section class="section section--dark section--tight-top" id="experience" data-era="Present" aria-labelledby="experience-title">
+      <div class="container">
+        <p class="eyebrow" data-reveal><span class="tc">05</span> Timeline</p>
+        <h2 class="section__title" id="experience-title" data-reveal="mask"><span>Professional Experience</span></h2>
+        <ol class="timeline">
+          <li class="timeline__item" data-reveal>
+            <p class="timeline__date mono"><time datetime="2026-10">Oct 2026</time> – Present · Remote</p>
+            <h3>AI Automation Engineer Intern</h3>
+            <p class="timeline__org">AgentGenius.ai / KeywordGenius</p>
+            <ul>
+              <li>Develop and maintain KeywordGenius, a Shopify-integrated app built with Next.js, React, TypeScript, and Shopify Polaris.</li>
+              <li>Ship responsive interface improvements and mobile compatibility fixes across product and collection management.</li>
+              <li>Investigate frontend-to-backend integration issues; collaborate on API reliability, MCP integration, and AI automation security.</li>
+              <li>Submit targeted fixes through pull requests with functional verification and documentation for code review.</li>
+            </ul>
+          </li>
+          <li class="timeline__item" data-reveal>
+            <p class="timeline__date mono"><time datetime="2026-08">Aug 2026</time> – Present · Remote</p>
+            <h3>Data Innovation Track Intern</h3>
+            <p class="timeline__org">Eskwelabs</p>
+            <ul>
+              <li>Synthetic data modeling and reproducible dataset generation for educational and applied data science use cases.</li>
+              <li>Data preparation, statistical reasoning, and validation for realistic, privacy-conscious dataset design.</li>
+              <li>Python workflows with Pandas and NumPy, documenting assumptions and preserving data quality.</li>
+            </ul>
+          </li>
+          <li class="timeline__item" data-reveal>
+            <p class="timeline__date mono"><time datetime="2026-06">Jun 2026</time> – <time datetime="2026-10">Oct 2026</time> · Remote</p>
+            <h3>Machine Learning Intern</h3>
+            <p class="timeline__org">FlyRank AI</p>
+            <ul>
+              <li>Applied machine learning: model evaluation, data preprocessing, and practical AI engineering workflows.</li>
+              <li>NLP and classification experiments with structured experimentation and performance assessment.</li>
+              <li>Identified model limitations and evaluated generated outputs within reproducible workflows.</li>
+            </ul>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ ARCHIVE ============ -->
+    <section class="section section--dark section--tight-top" id="archive" data-era="Present" aria-labelledby="archive-title">
+      <div class="container">
+        <p class="eyebrow" data-reveal><span class="tc">06</span> Archive</p>
+        <h2 class="section__title section__title--sm" id="archive-title" data-reveal="mask"><span>More Projects</span></h2>
+        <ul class="archive" data-reveal>
+          <li class="archive__item">
+            <img class="archive__thumb" src="assets/images/mantika-check.jpg" width="1200" height="750" loading="lazy" decoding="async" alt="Mantika Check landing page showing four oil-condition states, from ‘Continue monitoring’ to ‘Replace oil’.">
+            <div class="archive__main">
+              <h3><span class="mono">07</span> Mantika Check</h3>
+              <p>Helps street-food vendors track cooking-oil use and estimated degradation, combining fuzzy inference and Arrhenius modeling into explainable condition assessments.</p>
+              <p class="project__stack mono">Next.js · TypeScript · Supabase · PostgreSQL · Fuzzy Logic</p>
+            </div>
+            <p class="archive__links">
+              <a href="https://mantika-check.vercel.app/" target="_blank" rel="noopener noreferrer">Live<span class="sr-only"> demo of Mantika Check (opens in new tab)</span> <span class="arrow" aria-hidden="true">↗</span></a>
+              <a href="https://github.com/Gabi-comm/mantika-check" target="_blank" rel="noopener noreferrer">Source<span class="sr-only"> code of Mantika Check on GitHub (opens in new tab)</span> <span class="arrow" aria-hidden="true">↗</span></a>
+            </p>
+          </li>
+          <li class="archive__item">
+            <img class="archive__thumb" src="assets/images/brickbybrick.jpg" width="1200" height="750" loading="lazy" decoding="async" alt="BrickbyBrick product page for a brick-built character display set, with character options and pricing.">
+            <div class="archive__main">
+              <h3><span class="mono">08</span> BrickbyBrick</h3>
+              <p>LEGO-inspired storefront with responsive product displays, browsing interactions, and structured e-commerce layouts.</p>
+              <p class="project__stack mono">HTML5 · CSS3 · JavaScript</p>
+            </div>
+            <p class="archive__links">
+              <a href="https://brickbybrick-dun.vercel.app/" target="_blank" rel="noopener noreferrer">Live<span class="sr-only"> demo of BrickbyBrick (opens in new tab)</span> <span class="arrow" aria-hidden="true">↗</span></a>
+              <a href="https://github.com/sinagdevv/Lego-Shop-" target="_blank" rel="noopener noreferrer">Source<span class="sr-only"> code of BrickbyBrick on GitHub (opens in new tab)</span> <span class="arrow" aria-hidden="true">↗</span></a>
+            </p>
+          </li>
+          <li class="archive__item">
+            <!-- Original diagram, not a screenshot: one hub connecting four coding agents. -->
+            <svg class="archive__thumb archive__thumb--diagram" viewBox="0 0 160 100" role="img" aria-label="Diagram: a central knowledge hub connected to four AI coding agents.">
+              <g fill="none" stroke="currentColor" stroke-width="1" opacity=".5"><path d="M80 50 32 24M80 50l48-26M80 50 32 76M80 50l48 26"/></g>
+              <circle cx="80" cy="50" r="10" class="hub"/>
+              <g class="node"><circle cx="32" cy="24" r="5"/><circle cx="128" cy="24" r="5"/><circle cx="32" cy="76" r="5"/><circle cx="128" cy="76" r="5"/></g>
+            </svg>
+            <div class="archive__main">
+              <h3><span class="mono">09</span> H.E.L.I.O.S.</h3>
+              <p class="project__sub">Hybrid Executive Layer for Intelligence, Orchestration &amp; Synthesis</p>
+              <p>Local-first AI second brain that connects Claude Code, Codex, OpenCode, and Ollama through MCP, with shared context, hybrid search, cross-agent handoffs, and encrypted backups.</p>
+              <p class="project__stack mono">Python · SQLite FTS5 · MCP · Ollama · Vector Search · AES-256-GCM</p>
+            </div>
+            <p class="archive__links"><span class="project__private mono">No public link</span></p>
+          </li>
+          <li class="archive__item">
+            <!-- Original diagram, not a screenshot: a PR moving through review stages, one flagged. -->
+            <svg class="archive__thumb archive__thumb--diagram" viewBox="0 0 160 100" role="img" aria-label="Diagram: a pull request passing through six review stages, with one stage flagged for risk.">
+              <path d="M18 50h124" stroke="currentColor" stroke-width="1" opacity=".5"/>
+              <g class="node"><circle cx="18" cy="50" r="5"/><circle cx="43" cy="50" r="5"/><circle cx="68" cy="50" r="5"/><circle cx="118" cy="50" r="5"/><circle cx="142" cy="50" r="5"/></g>
+              <circle cx="93" cy="50" r="8" class="flag"/>
+            </svg>
+            <div class="archive__main">
+              <h3><span class="mono">10</span> OMEN</h3>
+              <p class="project__sub">Automated Code Review &amp; Security Risk Analysis</p>
+              <p>Multi-stage pull-request analysis covering security, dependencies, CI/CD, code quality, architecture, and operational risk, with severity scoring and optional local AI review.</p>
+              <p class="project__stack mono">n8n · JavaScript · GitHub REST API · Webhooks · Ollama</p>
+            </div>
+            <p class="archive__links"><span class="project__private mono">No public link</span></p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ COMMUNITY & CREDENTIALS ============ -->
+    <section class="section section--light" id="community" data-era="Present" aria-labelledby="community-title">
+      <div class="container">
+        <p class="eyebrow" data-reveal><span class="tc">07</span> Signal</p>
+        <h2 class="section__title" id="community-title" data-reveal="mask"><span>Community &amp; Credentials</span></h2>
+        <div class="creds">
+          <div data-reveal>
+            <h3 class="creds__head mono">Leadership &amp; communities</h3>
+            <ul class="ledger">
+              <li><strong>Think-Tank Department Member</strong><span>n8n Philippines User Group</span><time class="mono" datetime="2026-10">Oct 2026 –</time></li>
+              <li><strong>Technology Committee Member</strong><span>Workflow PH</span><time class="mono" datetime="2026-03">Mar 2026 –</time></li>
+              <li><strong>Campus Ambassador, NUFV Representative</strong><span>AWS User Group e Philippines</span><time class="mono" datetime="2026-02">Feb 2026 –</time></li>
+              <li><strong>Student Volunteer</strong><span>DEVCON Philippines</span><time class="mono" datetime="2026-02">Feb 2026 –</time></li>
+              <li><strong>Student Volunteer</strong><span>DEVCON Kids</span><time class="mono" datetime="2026-02">Feb 2026 –</time></li>
+              <li><strong>Volunteer Care Unit Member</strong><span>Alay ni Ignacio, Ateneo de Manila University</span><time class="mono" datetime="2026-03">Mar 2026 –</time></li>
+              <li><strong>Technology &amp; Documentation Committee Member</strong><span>NU Fairview Scholar Society</span></li>
+            </ul>
+          </div>
+          <div data-reveal>
+            <h3 class="creds__head mono">Certifications &amp; scholarships</h3>
+            <ul class="ledger">
+              <li><strong>NetOps Certified Engineer (NTO-101)</strong><time class="mono" datetime="2026-10">Oct 2026</time></li>
+              <li><strong>Certified Cybersecurity Professional (CCP)</strong><time class="mono" datetime="2026-08">Aug 2026</time></li>
+              <li><strong>WinOps Certified Engineer (WNO-101)</strong><time class="mono" datetime="2026-08">Aug 2026</time></li>
+              <li><strong>LinuxOps Certified Engineer (LXO-101)</strong><time class="mono" datetime="2026-08">Aug 2026</time></li>
+              <li><strong>AWS AI &amp; ML Scholars – 2026 Challenge Completion</strong><time class="mono" datetime="2026-03">Mar 2026</time></li>
+              <li><strong>AWS AI Practitioner Challenge</strong><time class="mono" datetime="2026-04">Apr 2026</time></li>
+              <li><strong>AWS Scholars Badges</strong><span>Analyze Data Using AI with PartyRock · Build Your First AI Productivity App</span><time class="mono" datetime="2026-04">Apr 2026</time></li>
+              <li><strong>AWS AI &amp; ML Scholar and AWS AI Programmer Nanodegree Scholar</strong><span>AWS / Udacity</span></li>
+              <li><strong>Aiducation Scholar</strong><span>Pathways to Higher Education, Batch 20 (Ateneo de Manila University)</span></li>
+              <li><strong>DataCamp Scholar</strong><span>GDG PLM</span></li>
+              <li><strong>GCI World 2026 Participant</strong><span>Matsuo-Iwasawa Lab, University of Tokyo</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CAREER GOALS ============ -->
+    <section class="section section--future" id="goals" data-era="Future" aria-labelledby="goals-title">
+      <div class="future__horizon" aria-hidden="true"></div>
+      <div class="container">
+        <p class="eyebrow" data-reveal><span class="tc">08</span> Destination</p>
+        <h2 class="section__title" id="goals-title" data-reveal="mask"><span>Career Goals</span></h2>
+        <p class="section__intro" data-reveal>Where I’m heading next. These are directions I’m working toward, not milestones already reached.</p>
+        <ol class="goals">
+          <li data-reveal>
+            <span class="goals__code mono">Destination 01</span>
+            <h3>Engineer secure and reliable AI systems</h3>
+            <p>Make agent authorization, governance, and auditability default parts of how AI software is built, continuing the work started with C.A.G.E.</p>
+          </li>
+          <li data-reveal>
+            <span class="goals__code mono">Destination 02</span>
+            <h3>Build and ship scalable, production-grade software</h3>
+            <p>Grow from shipping targeted fixes to owning features end to end: design, testing, review, and operation in production.</p>
+          </li>
+          <li data-reveal>
+            <span class="goals__code mono">Destination 03</span>
+            <h3>Deepen cloud, automation, and applied AI security</h3>
+            <p>Advance expertise in cloud infrastructure and intelligent automation, and the security practices that keep both trustworthy.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="section section--dark" id="contact" data-era="Future" aria-labelledby="contact-title">
+      <div class="container contact">
+        <div class="contact__intro">
+          <p class="eyebrow" data-reveal><span class="tc">09</span> Transmission</p>
+          <h2 class="section__title" id="contact-title" data-reveal="mask"><span>Contact Me</span></h2>
+          <p class="contact__lead" data-reveal>Open to internships, collaborations, and conversations about AI security, automation, and full-stack work.</p>
+          <ul class="contact__links" data-reveal>
+            <li><span class="mono">Email</span><a href="mailto:johnray.cacananta@gmail.com">johnray.cacananta@gmail.com</a></li>
+            <li><span class="mono">GitHub</span><a href="https://github.com/sinagdevv" target="_blank" rel="noopener noreferrer">github.com/sinagdevv<span class="sr-only"> (opens in new tab)</span> <span class="arrow" aria-hidden="true">↗</span></a></li>
+            <li><span class="mono">LinkedIn</span><a href="https://www.linkedin.com/in/jrcacananta/" target="_blank" rel="noopener noreferrer">in/jrcacananta<span class="sr-only"> (opens in new tab)</span> <span class="arrow" aria-hidden="true">↗</span></a></li>
+          </ul>
+          <div class="arrival mono" aria-hidden="true" data-reveal>
+            <span class="arrival__label">Arrival</span>
+            <span class="arrival__time"><b data-clock="hh">--</b><em>:</em><b data-clock="mm">--</b></span>
+            <span class="arrival__label">MNL</span>
+          </div>
+        </div>
+
+        <form class="form" id="contact-form" action="mailto:johnray.cacananta@gmail.com" method="post" enctype="text/plain" data-reveal>
+          <div class="field">
+            <label for="cf-name">Name</label>
+            <input id="cf-name" name="name" type="text" autocomplete="name" required maxlength="100" aria-describedby="cf-name-error">
+            <p class="field__error" id="cf-name-error"></p>
+          </div>
+          <div class="field">
+            <label for="cf-email">Email</label>
+            <input id="cf-email" name="email" type="email" autocomplete="email" inputmode="email" required maxlength="200" aria-describedby="cf-email-error">
+            <p class="field__error" id="cf-email-error"></p>
+          </div>
+          <div class="field">
+            <label for="cf-message">Message</label>
+            <textarea id="cf-message" name="message" rows="5" required minlength="10" maxlength="2000" aria-describedby="cf-message-error"></textarea>
+            <p class="field__error" id="cf-message-error"></p>
+          </div>
+          <div class="form__foot">
+            <button class="btn btn--primary" type="submit">Compose email <span class="btn__arrow" aria-hidden="true">→</span></button>
+            <p class="form__note">Opens your email app with this message pre-filled. Nothing is sent until you press send there.</p>
+          </div>
+          <p class="form__status" id="cf-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
   </main>
 
   <!-- ============ FOOTER ============ -->

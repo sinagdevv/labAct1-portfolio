@@ -31,11 +31,33 @@
   tick();
   setInterval(tick, 15000);
 
+  // Contact scene: the arrival readout cycles briefly, then settles on the real time.
+  function settleArrival(container) {
+    const digits = $$('[data-clock]', container);
+    if (reduceMotion || !digits.length) return;
+    digits.forEach((d) => { d.dataset.scrambling = '1'; });
+    let frames = 0;
+    const id = setInterval(() => {
+      digits.forEach((d) => { d.textContent = String(Math.floor(Math.random() * 100)).padStart(2, '0'); });
+      if (++frames > 10) {
+        clearInterval(id);
+        digits.forEach((d) => { delete d.dataset.scrambling; });
+        tick();
+      }
+    }, 55);
+  }
+
   /* ---------- Section reveals ---------- */
+  // Stagger siblings only where order carries meaning (grids of peers).
+  $$('.projects__grid, .goals, .creds').forEach((group) => {
+    [...group.children].forEach((child, i) => child.style.setProperty('--d', `${i * 90}ms`));
+  });
+
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
       entry.target.classList.add('is-in');
+      if (entry.target.classList.contains('arrival')) settleArrival(entry.target);
       revealObserver.unobserve(entry.target);
     });
   }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
@@ -43,12 +65,13 @@
 
   /* ---------- Active navigation link ---------- */
   const navLinks = new Map($$('.bar__nav a').map((a) => [a.hash.slice(1), a]));
+  const navAlias = { experience: 'projects', archive: 'projects' };
   const sections = $$('main > section');
 
   const navObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
-      const id = entry.target.id;
+      const id = navAlias[entry.target.id] || entry.target.id;
       navLinks.forEach((a, key) => {
         if (key === id) a.setAttribute('aria-current', 'true');
         else a.removeAttribute('aria-current');
@@ -137,6 +160,22 @@
       panel.style.setProperty('--rx', '0deg');
       panel.style.setProperty('--ry', '0deg');
     });
+
+    $$('.project__media').forEach((media) => {
+      media.addEventListener('pointermove', (e) => {
+        const r = media.getBoundingClientRect();
+        const x = e.clientX - r.left;
+        const y = e.clientY - r.top;
+        media.style.setProperty('--mx', `${x}px`);
+        media.style.setProperty('--my', `${y}px`);
+        media.style.setProperty('--px', `${((x / r.width) - 0.5) * -10}px`);
+        media.style.setProperty('--py', `${((y / r.height) - 0.5) * -10}px`);
+      });
+      media.addEventListener('pointerleave', () => {
+        media.style.setProperty('--px', '0px');
+        media.style.setProperty('--py', '0px');
+      });
+    });
   }
 
   /* ---------- Scroll-scrubbed scenes (GSAP + ScrollTrigger, optional) ---------- */
@@ -148,6 +187,73 @@
     gsap.fromTo('.circuit', { y: 0, scale: 1, opacity: 1 }, {
       yPercent: -10, opacity: 0.3, ease: 'none',
       scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true },
+    });
+
+    // Experience: the timeline line charges as it is read.
+    gsap.fromTo('.timeline', { '--t': 0 }, {
+      '--t': 1, ease: 'none',
+      scrollTrigger: { trigger: '.timeline', start: 'top 75%', end: 'bottom 60%', scrub: 0.4 },
+    });
+
+    // Future: the horizon light widens as Career Goals arrives.
+    gsap.fromTo('#goals', { '--f': 0 }, {
+      '--f': 1, ease: 'none',
+      scrollTrigger: { trigger: '#goals', start: 'top bottom', end: 'top 25%', scrub: 0.4 },
+    });
+
+    // Subtle screenshot parallax — desktop only.
+    gsap.matchMedia().add('(min-width: 900px)', () => {
+      $$('.project__media img').forEach((img) => {
+        gsap.fromTo(img, { yPercent: -3 }, {
+          yPercent: 3, ease: 'none',
+          scrollTrigger: { trigger: img.parentElement, start: 'top bottom', end: 'bottom top', scrub: true },
+        });
+      });
+    });
+  }
+
+  /* ---------- Contact form: honest mailto workflow ---------- */
+  const form = $('#contact-form');
+  if (form) {
+    form.noValidate = true; // replace browser bubbles with inline, screen-reader-friendly messages
+    const status = $('#cf-status');
+    const rules = {
+      name: (el) => (el.value.trim() ? '' : 'Please enter your name.'),
+      email: (el) => {
+        if (!el.value.trim()) return 'Please enter your email address.';
+        if (el.validity.typeMismatch) return 'That email address looks incomplete — for example, name@example.com.';
+        return '';
+      },
+      message: (el) => (el.value.trim().length >= 10 ? '' : 'Please write a message of at least 10 characters.'),
+    };
+    const fields = [...form.elements].filter((el) => el.name in rules);
+
+    const check = (el) => {
+      const error = rules[el.name](el);
+      $(`#${el.getAttribute('aria-describedby')}`).textContent = error;
+      if (error) el.setAttribute('aria-invalid', 'true');
+      else el.removeAttribute('aria-invalid');
+      return !error;
+    };
+
+    fields.forEach((el) => {
+      el.addEventListener('input', () => { if (el.hasAttribute('aria-invalid')) check(el); });
+      el.addEventListener('blur', () => { if (el.value) check(el); });
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const invalid = fields.filter((el) => !check(el));
+      if (invalid.length) {
+        status.textContent = `Please fix ${invalid.length} field${invalid.length > 1 ? 's' : ''} above.`;
+        invalid[0].focus();
+        return;
+      }
+      const [name, email, message] = fields.map((el) => el.value.trim());
+      const subject = `Portfolio message from ${name}`;
+      const body = `${message}\n\n— ${name}\n${email}`;
+      window.location.href = `mailto:johnray.cacananta@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      status.textContent = 'Your email app should now open with this message drafted. Nothing has been sent yet — press send there. If no app opened, write to johnray.cacananta@gmail.com directly.';
     });
   }
 })();
