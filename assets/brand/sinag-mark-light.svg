@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="SINAG monogram">
+  <path d="M8 32h48" stroke="#006f85" stroke-width="2.5"/>
+  <path d="M39.39 14A12 12 0 1 0 29 32M35 32A12 12 0 1 1 24.61 50" fill="none" stroke="#141414" stroke-width="6"/>
+  <circle cx="47" cy="11" r="4" fill="#d98a12"/>
+</svg>
