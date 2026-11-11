@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>John Ray Cacananta — Developer Portfolio</title>
+  <meta name="description" content="Portfolio of John Ray Cacananta (sinagdevv): full-stack developer working across AI security, cloud, and automation.">
+  <meta name="theme-color" content="#0c0d0f">
+  <link rel="icon" href="assets/graphics/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Doto:wght@600..900&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+  <!-- Reveal styles only apply once JS confirms it is running; otherwise all content stays visible. -->
+  <script>
+    document.documentElement.classList.add('js');
+    setTimeout(function () { if (!window.__motionReady) document.documentElement.classList.remove('js'); }, 2500);
+  </script>
+  <!-- GSAP drives only scroll-scrubbed effects; the site works fully if the CDN is unreachable. -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ============ HEADER / ARRIVAL ============ -->
+  <header class="hero" id="top">
+    <div class="bar">
+      <a class="bar__brand" href="#top" aria-label="sinagdevv, back to top">
+        <span class="bar__dot" aria-hidden="true"></span>sinagdevv
+      </a>
+      <nav class="bar__nav" aria-label="Primary">
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#education">Education</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="hero__inner container">
+      <div class="hero__copy">
+        <p class="eyebrow hero__eyebrow">Developer Portfolio <span aria-hidden="true">/</span> Vol. 2026</p>
+        <h1 class="hero__name">
+          <span class="line"><span>John Ray</span></span>
+          <span class="line"><span>Cacananta</span></span>
+        </h1>
+        <p class="hero__role">Full-Stack Developer <span aria-hidden="true">/</span> AI Security <span aria-hidden="true">/</span> Cloud <span aria-hidden="true">/</span> Automation</p>
+        <p class="hero__tagline mono">Building what comes next.</p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#about">About Me <span class="btn__arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn--ghost" href="mailto:johnray.cacananta@gmail.com">Email Me</a>
+        </div>
+      </div>
+
+      <figure class="circuit" id="circuit">
+        <figcaption class="sr-only">Time-circuit display. Origin: February 2026, my first developer-community role. Present: the current date and time in Manila. Destination: not yet known.</figcaption>
+        <div class="circuit__panel" aria-hidden="true">
+          <div class="circuit__trace"></div>
+          <div class="circuit__head mono"><span>Temporal instrument</span><span class="circuit__led"></span></div>
+          <div class="circuit__row circuit__row--dest">
+            <div class="circuit__cells">
+              <span class="cell"><i>Month</i><b>???</b></span>
+              <span class="cell"><i>Day</i><b>??</b></span>
+              <span class="cell"><i>Year</i><b>????</b></span>
+              <span class="cell"><i>Time</i><b>??<em>:</em>??</b></span>
+            </div>
+            <span class="circuit__label mono">Destination</span>
+          </div>
+          <div class="circuit__row circuit__row--now">
+            <div class="circuit__cells">
+              <span class="cell"><i>Month</i><b data-clock="month">NOV</b></span>
+              <span class="cell"><i>Day</i><b data-clock="day">11</b></span>
+              <span class="cell"><i>Year</i><b data-clock="year">2026</b></span>
+              <span class="cell"><i>Time</i><b><span data-clock="hh">--</span><em>:</em><span data-clock="mm">--</span></b></span>
+            </div>
+            <span class="circuit__label mono">Present · MNL</span>
+          </div>
+          <div class="circuit__row circuit__row--origin">
+            <div class="circuit__cells">
+              <span class="cell"><i>Month</i><b>FEB</b></span>
+              <span class="cell"><i>Day</i><b>--</b></span>
+              <span class="cell"><i>Year</i><b>2026</b></span>
+              <span class="cell"><i>Time</i><b>--<em>:</em>--</b></span>
+            </div>
+            <span class="circuit__label mono">Origin</span>
+          </div>
+        </div>
+      </figure>
+    </div>
+
+    <!-- Hero time axis: real milestones, drawn as the energy trace resolves. -->
+    <div class="axis container" aria-hidden="true">
+      <div class="axis__track"><span class="axis__energy"></span><span class="axis__future"></span></div>
+      <ol class="axis__marks mono">
+        <li style="--x:0%">Feb 2026<b>Community</b></li>
+        <li style="--x:26%" class="axis__minor">Jun 2026<b>FlyRank AI</b></li>
+        <li style="--x:44%" class="axis__minor">Aug 2026<b>Eskwelabs</b></li>
+        <li style="--x:60%" class="axis__minor">Oct 2026<b>AgentGenius.ai</b></li>
+        <li style="--x:72%" class="axis__now">Now<b>Nov 2026</b></li>
+        <li style="--x:100%" class="axis__next">Next<b>→</b></li>
+      </ol>
+    </div>
+  </header>
+
+  <!-- Temporal progress instrument (decorative; section navigation lives in the header). -->
+  <div class="progress" aria-hidden="true">
+    <span class="progress__bar"></span>
+  </div>
+  <div class="odometer mono" aria-hidden="true">
+    <span class="odometer__era">Arrival</span>
+    <span class="odometer__sec">00/03</span>
+    <span class="odometer__mph"><b>000</b> mph</span>
+  </div>
+  <p class="toast mono" role="status" aria-live="polite"></p>
+  <div class="streak" aria-hidden="true"></div>
+
+  <main id="main">
+
+    <!-- ============ ABOUT ============ -->
+    <section class="section section--light" id="about" data-era="Past" aria-labelledby="about-title">
+      <div class="container about">
+        <p class="eyebrow" data-reveal><span class="tc">01</span> Origin</p>
+        <h2 class="section__title" id="about-title" data-reveal="mask"><span>About Me</span></h2>
+        <div class="about__grid">
+          <div class="about__text">
+            <p class="lead" data-reveal>I’m an Information Technology student at National University – Fairview who builds full-stack applications, AI security systems, and automation workflows.</p>
+            <p data-reveal>My experience spans production work on a Shopify-integrated application, applied machine learning, and synthetic data modeling across three remote internships. I led the backend of DEVCON Kids Hub 2.0, engineered C.A.G.E. to decide whether an AI agent’s action should be allowed, denied, or escalated for approval, and co-built local-first AI tools with hackathon teams.</p>
+            <p data-reveal>Outside of shipping code, I contribute to developer communities including DEVCON Philippines, AWS User Group, n8n Philippines, and Workflow PH.</p>
+          </div>
+          <dl class="facts" data-reveal>
+            <div><dt>Alias</dt><dd>sinagdevv</dd></div>
+            <div><dt>Currently</dt><dd>AI Automation Engineer Intern, AgentGenius.ai / KeywordGenius</dd></div>
+            <div><dt>Also</dt><dd>Data Innovation Track Intern, Eskwelabs</dd></div>
+            <div><dt>Focus</dt><dd>Full-stack · AI security · Cloud · Automation</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SKILLS ============ -->
+    <section class="section section--light section--tight-top" id="skills" data-era="Past" aria-labelledby="skills-title">
+      <div class="container">
+        <p class="eyebrow" data-reveal><span class="tc">02</span> Instruments</p>
+        <h2 class="section__title" id="skills-title" data-reveal="mask"><span>Technical Skills</span></h2>
+        <div class="skills" data-reveal>
+          <div class="skill"><h3><span class="mono">01</span> Languages</h3>
+            <ul><li>Python</li><li>Java</li><li>JavaScript</li><li>TypeScript</li><li>SQL</li><li>HTML5</li><li>CSS3</li><li>Bash</li><li>PowerShell</li></ul></div>
+          <div class="skill"><h3><span class="mono">02</span> Frontend</h3>
+            <ul><li>React</li><li>Next.js</li><li>Vite</li><li>Tailwind CSS</li><li>Bootstrap</li><li>Responsive Web Design</li><li>JavaFX</li></ul></div>
+          <div class="skill"><h3><span class="mono">03</span> Backend</h3>
+            <ul><li>FastAPI</li><li>Node.js</li><li>Express.js</li><li>REST APIs</li><li>Serverless Functions</li><li>Supabase Edge Functions</li><li>Google Apps Script</li><li>Authentication &amp; Authorization</li><li>API Integration</li></ul></div>
+          <div class="skill"><h3><span class="mono">04</span> Databases</h3>
+            <ul><li>PostgreSQL</li><li>MySQL</li><li>SQLite</li><li>SQLite FTS5</li><li>Supabase</li><li>Firebase Firestore</li><li>pgvector</li><li>Data Modeling</li><li>ETL</li><li>Data Validation</li></ul></div>
+          <div class="skill"><h3><span class="mono">05</span> AI / ML</h3>
+            <ul><li>PyTorch</li><li>Scikit-learn</li><li>NumPy</li><li>Pandas</li><li>Matplotlib</li><li>Vector Embeddings</li><li>Semantic Search</li><li>RAG</li><li>LLM Integration</li><li>Ollama</li><li>Local AI Inference</li></ul></div>
+          <div class="skill skill--accent"><h3><span class="mono">06</span> AI Security</h3>
+            <ul><li>Model Context Protocol</li><li>AI Agent Orchestration</li><li>Open Policy Agent</li><li>Rego</li><li>Intent-Based Authorization</li><li>Causal Graphs</li><li>AI Governance</li><li>Audit Logging</li></ul></div>
+          <div class="skill"><h3><span class="mono">07</span> Cloud / DevOps</h3>
+            <ul><li>AWS</li><li>Microsoft Azure</li><li>Docker</li><li>Vercel</li><li>Linux</li><li>Git</li><li>GitHub</li><li>GitLab</li><li>CI/CD</li></ul></div>
+          <div class="skill"><h3><span class="mono">08</span> Automation</h3>
+            <ul><li>n8n</li><li>Power Automate</li><li>UiPath</li><li>RPA</li><li>Microsoft Power Platform</li><li>SharePoint</li><li>Google Workspace APIs</li><li>Webhooks</li><li>Workflow Orchestration</li></ul></div>
+          <div class="skill"><h3><span class="mono">09</span> Tools</h3>
+            <ul><li>VS Code</li><li>IntelliJ IDEA</li><li>Kiro</li><li>Postman</li><li>Power BI</li><li>Claude Code</li><li>Codex</li><li>OpenCode</li><li>OpenClaw</li></ul></div>
+          <div class="skill"><h3><span class="mono">10</span> Systems / Networking</h3>
+            <ul><li>Windows</li><li>Ubuntu</li><li>Debian</li><li>Kali Linux</li><li>Parrot OS</li><li>BlackArch Linux</li><li>Cisco Networking Fundamentals</li></ul></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ EDUCATION ============ -->
+    <section class="section section--light section--tight-top" id="education" data-era="Past" aria-labelledby="education-title">
+      <div class="container education">
+        <p class="eyebrow" data-reveal><span class="tc">03</span> Foundation</p>
+        <h2 class="section__title" id="education-title" data-reveal="mask"><span>Educational Background</span></h2>
+        <div class="education__grid">
+          <table class="edu-table" data-reveal>
+            <caption class="sr-only">Educational background</caption>
+            <tbody>
+              <tr><th scope="row">School</th><td>National University – Fairview<span class="muted">Quezon City, Philippines</span></td></tr>
+              <tr><th scope="row">Program</th><td>Bachelor of Science in Information Technology<span class="muted">Specialization in Mobile and Internet Technologies</span></td></tr>
+              <tr><th scope="row">Year Level</th><td>Second Year</td></tr>
+            </tbody>
+          </table>
+          <div class="honors" data-reveal>
+            <h3 class="mono">Academic record</h3>
+            <ul>
+              <li><strong>Consistent First Honor Dean’s Lister</strong> <span class="pill mono">4.0 GPA</span></li>
+              <li><strong>Blue Scholar</strong></li>
+              <li><strong>Technology &amp; Documentation Committee Member</strong>, NU Fairview Scholar Society</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p class="footer__name">John Ray Cacananta <span class="mono">/ sinagdevv</span></p>
+      <p class="footer__msg">Thanks for traveling through. Where we’re going, we still need well-tested code.</p>
+      <p class="footer__meta mono">© <span data-year>2026</span> John Ray Cacananta · <a href="#top">Back to top ↑</a></p>
+    </div>
+  </footer>
+</body>
+</html>
